@@ -48,7 +48,7 @@ export default function App() {
 	}, []);
 
 	return (
-		<main className="h-screen text-white">
+		<main className="h-screen text-white selection:text-white">
 			<SettingsRow />
 
 			<Header
