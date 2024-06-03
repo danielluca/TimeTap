@@ -20,8 +20,8 @@ export default function Header({
 	);
 
 	return (
-		<div className="mt-8">
-			<h1 className="text-7xl font-medium tracking-tighter text-balance">
+		<div className="p-[10vw]">
+			<h1 className="text-[max(8ch,_4.5vw)] font-medium tracking-[-0.2vw] leading-none text-balance">
 				{introText} {stateText}
 			</h1>
 		</div>

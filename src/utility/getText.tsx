@@ -11,7 +11,7 @@ export function getText(
 				ready to{" "}
 				<button
 					type="button"
-					className="inline text-left hover:text-white/80 transition-all underline"
+					className="inline text-left hover:text-white/80 transition-colors underline"
 					onClick={handleCheckInToggle}
 				>
 					start your work
@@ -26,7 +26,7 @@ export function getText(
 			until you can{" "}
 			<button
 				type="button"
-				className="inline text-left hover:text-white/80 transition-all underline"
+				className="inline text-left hover:text-white/80 transition-colors underline"
 				onClick={handleCheckInToggle}
 			>
 				finish your work

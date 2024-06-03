@@ -48,17 +48,15 @@ export default function App() {
 	}, []);
 
 	return (
-		<main className="flex flex-col h-screen pt-24">
-			<section className="text-white container mx-auto">
-				<SettingsRow />
+		<main className="h-screen text-white">
+			<SettingsRow />
 
-				<Header
-					plannedCheckoutTime={plannedCheckoutTime}
-					isCheckedIn={isCheckedIn}
-					name={name}
-					handleCheckInToggle={handleCheckIn}
-				/>
-			</section>
+			<Header
+				plannedCheckoutTime={plannedCheckoutTime}
+				isCheckedIn={isCheckedIn}
+				name={name}
+				handleCheckInToggle={handleCheckIn}
+			/>
 
 			<BackgroundImage />
 		</main>
