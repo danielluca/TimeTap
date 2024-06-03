@@ -2,23 +2,27 @@ import { getSalutation } from "../utility/getSalutation";
 import { getText } from "../utility/getText";
 
 export default function Header({
-	duration,
+	plannedCheckoutTime,
 	isCheckedIn,
 	name,
 	handleCheckInToggle,
 }: {
-	duration: number;
+	plannedCheckoutTime: number | null;
 	isCheckedIn: boolean;
 	name: string;
 	handleCheckInToggle: () => void;
 }) {
 	const introText = `Good ${getSalutation()} ${name},`;
-	const stateText = getText(duration, isCheckedIn, handleCheckInToggle);
+	const stateText = getText(
+		plannedCheckoutTime,
+		isCheckedIn,
+		handleCheckInToggle,
+	);
 
 	return (
 		<div className="mt-8">
-			<h1 className="text-8xl font-medium tracking-tighter text-balance leading-none">
-				{introText} <br /> {stateText}
+			<h1 className="text-7xl font-medium tracking-tighter text-balance">
+				{introText} {stateText}
 			</h1>
 		</div>
 	);

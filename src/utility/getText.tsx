@@ -1,7 +1,7 @@
 import Timer from "../components/Timer";
 
 export function getText(
-	duration: number,
+	plannedCheckoutTime: number | null,
 	isCheckedIn: boolean,
 	handleCheckInToggle: () => void,
 ) {
@@ -11,7 +11,7 @@ export function getText(
 				ready to{" "}
 				<button
 					type="button"
-					className="inline-flex hover:text-white/80 transition-all underline"
+					className="inline text-left hover:text-white/80 transition-all underline"
 					onClick={handleCheckInToggle}
 				>
 					start your work
@@ -22,10 +22,11 @@ export function getText(
 
 	return (
 		<>
-			there are <Timer duration={duration} /> hours left until you can{" "}
+			there are <Timer plannedCheckoutTime={plannedCheckoutTime} /> hours left
+			until you can{" "}
 			<button
 				type="button"
-				className="inline-flex hover:text-white/80 transition-all underline"
+				className="inline text-left hover:text-white/80 transition-all underline"
 				onClick={handleCheckInToggle}
 			>
 				finish your work

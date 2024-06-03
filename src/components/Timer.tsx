@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 
-export default function Timer({ duration }: { duration: number }) {
-	const [currentTime, setCurrentTime] = useState<number>(duration); //ms
+export default function Timer({
+	plannedCheckoutTime,
+}: { plannedCheckoutTime: number | null }) {
+	const now = Date.now();
+	const [currentTime, setCurrentTime] = useState<number>(
+		plannedCheckoutTime ? plannedCheckoutTime - now : 0,
+	); //ms
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -30,7 +35,7 @@ export default function Timer({ duration }: { duration: number }) {
 	};
 
 	return (
-		<span className='[font-feature-settings:"tnum"] bg-white/30 inline-flex leading-none rounded-xl overflow-hidden px-3 py-0'>
+		<span className='[font-feature-settings:"tnum"] bg-white/30 inline-flex leading-none rounded-xl overflow-hidden pl-2 pr-3 pb-0.5 py-0 text-left'>
 			{formatTime(currentTime)}
 		</span>
 	);
