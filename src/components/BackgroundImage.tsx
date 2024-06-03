@@ -8,15 +8,15 @@ export default function BackgroundImage() {
 	}, []);
 
 	return (
-		<div>
+		<>
 			<a
 				href={bgImage.profileUrl}
-				className="bg-white/30 inline-flex items-center text-white rounded px-2 absolute right-0 bottom-0 m-8 gap-2 text-sm opacity-50 hover:opacity-100 transition-all"
+				className="bg-white/30 inline-flex items-center text-white rounded px-2 pr-1 absolute right-0 bottom-0 m-8 gap-2 text-sm opacity-50 hover:opacity-100 transition-all"
 				target="_blank"
 				rel="noopener noreferrer"
 			>
-				<ArrowSquareOut weight="bold" /> Image of {bgImage.creator} from
-				Unsplash
+				Image of {bgImage.creator} from Unsplash
+				<ArrowSquareOut weight="bold" />
 			</a>
 
 			<img
@@ -24,6 +24,6 @@ export default function BackgroundImage() {
 				src={bgImage.imageUrl}
 				alt=""
 			/>
-		</div>
+		</>
 	);
 }

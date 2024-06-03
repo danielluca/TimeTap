@@ -17,6 +17,8 @@ type SettingsContextType = {
 	setPause: Dispatch<SetStateAction<number>>;
 	plannedCheckoutTime: number | null;
 	setPlannedCheckoutTime: Dispatch<SetStateAction<number | null>>;
+	isOpen: boolean;
+	setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 export const SettingsContext = createContext<SettingsContextType | null>(null);
@@ -24,13 +26,14 @@ export const SettingsContext = createContext<SettingsContextType | null>(null);
 export default function SettingsContextProvider({
 	children,
 }: { children: ReactNode }) {
-	const [workHours, setWorkingHours] = useState<number>(28800000);
-	const [pause, setPause] = useState<number>(3600000);
+	const [workHours, setWorkingHours] = useState<number>(0);
+	const [pause, setPause] = useState<number>(0);
 	const [isCheckedIn, setIsCheckedIn] = useState<boolean>(false);
 	const [name, setName] = useState<string>("Daniel");
 	const [plannedCheckoutTime, setPlannedCheckoutTime] = useState<number | null>(
 		null,
 	);
+	const [isOpen, setIsOpen] = useState(false);
 
 	return (
 		<SettingsContext.Provider
@@ -45,6 +48,8 @@ export default function SettingsContextProvider({
 				setPlannedCheckoutTime,
 				pause,
 				setPause,
+				isOpen,
+				setIsOpen,
 			}}
 		>
 			{children}
