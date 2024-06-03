@@ -1,23 +1,21 @@
+import { useEffect } from "react";
+import { useSettingsContext } from "../hooks/useSettingsContext";
 import { getSalutation } from "../utility/getSalutation";
 import { getText } from "../utility/getText";
 
-export default function Header({
-	plannedCheckoutTime,
-	isCheckedIn,
-	name,
-	handleCheckInToggle,
-}: {
-	plannedCheckoutTime: number | null;
-	isCheckedIn: boolean;
-	name: string;
-	handleCheckInToggle: () => void;
-}) {
+export default function Header() {
+	const { name, setIsCheckedIn, setPlannedCheckoutTime } = useSettingsContext();
 	const introText = `Good ${getSalutation()} ${name},`;
-	const stateText = getText(
-		plannedCheckoutTime,
-		isCheckedIn,
-		handleCheckInToggle,
-	);
+	const stateText = getText();
+
+	useEffect(() => {
+		const session = localStorage.getItem("session");
+
+		if (session) {
+			setIsCheckedIn(JSON.parse(session).isCheckedIn);
+			setPlannedCheckoutTime(JSON.parse(session).plannedCheckoutTime);
+		}
+	}, []);
 
 	return (
 		<div className="p-[10vw]">
