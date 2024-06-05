@@ -4,6 +4,7 @@ import {
 	useState,
 	type Dispatch,
 	type SetStateAction,
+	useMemo,
 } from "react";
 
 type SettingsContextType = {
@@ -22,18 +23,40 @@ type SettingsContextType = {
 };
 
 export const SettingsContext = createContext<SettingsContextType | null>(null);
+const session = localStorage.getItem("session");
 
 export default function SettingsContextProvider({
 	children,
 }: { children: ReactNode }) {
-	const [workHours, setWorkingHours] = useState<number>(0);
-	const [pause, setPause] = useState<number>(0);
-	const [isCheckedIn, setIsCheckedIn] = useState<boolean>(false);
-	const [name, setName] = useState<string>("Daniel");
+	const [workHours, setWorkingHours] = useState<number>(
+		session ? JSON.parse(session).workHours : 0,
+	);
+	const [pause, setPause] = useState<number>(
+		session ? JSON.parse(session).pause : 0,
+	);
+	const [isCheckedIn, setIsCheckedIn] = useState<boolean>(
+		session ? JSON.parse(session).isCheckedIn : false,
+	);
+	const [name, setName] = useState<string>(
+		session ? JSON.parse(session).name : "",
+	);
 	const [plannedCheckoutTime, setPlannedCheckoutTime] = useState<number | null>(
-		null,
+		session ? JSON.parse(session).plannedCheckoutTime : null,
 	);
 	const [isOpen, setIsOpen] = useState(false);
+
+	useMemo(() => {
+		localStorage.setItem(
+			"session",
+			JSON.stringify({
+				workHours,
+				pause,
+				name,
+				isCheckedIn,
+				plannedCheckoutTime,
+			}),
+		);
+	}, [workHours, pause, name, isCheckedIn, plannedCheckoutTime]);
 
 	return (
 		<SettingsContext.Provider

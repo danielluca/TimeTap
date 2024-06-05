@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useSettingsContext } from "../hooks/useSettingsContext";
 import { getSalutation } from "../utility/getSalutation";
 import Timer from "./Timer";
@@ -6,28 +5,13 @@ import Timer from "./Timer";
 export default function MainBar() {
 	const {
 		workHours,
-		setWorkingHours,
 		pause,
-		setPause,
 		name,
-		setName,
 		isCheckedIn,
 		setIsCheckedIn,
 		plannedCheckoutTime,
 		setPlannedCheckoutTime,
 	} = useSettingsContext();
-
-	useEffect(() => {
-		const session = localStorage.getItem("session");
-
-		if (session) {
-			setIsCheckedIn(JSON.parse(session).isCheckedIn);
-			setPlannedCheckoutTime(JSON.parse(session).plannedCheckoutTime);
-			setWorkingHours(JSON.parse(session).workHours);
-			setPause(JSON.parse(session).pause);
-			setName(JSON.parse(session).name);
-		}
-	}, [setIsCheckedIn, setPlannedCheckoutTime]);
 
 	function handleCheckIn() {
 		if (!isCheckedIn) {
@@ -37,23 +21,11 @@ export default function MainBar() {
 			setIsCheckedIn(true);
 			setPlannedCheckoutTime(now + chekoutTime);
 
-			localStorage.setItem(
-				"session",
-				JSON.stringify({
-					isCheckedIn: true,
-					plannedCheckoutTime: now + chekoutTime,
-					workHours: workHours,
-					pause: pause,
-					name: name,
-				}),
-			);
-
 			return;
 		}
 
 		setIsCheckedIn(false);
 		setPlannedCheckoutTime(null);
-		localStorage.removeItem("session");
 
 		return;
 	}

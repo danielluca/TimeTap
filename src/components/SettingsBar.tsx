@@ -36,8 +36,15 @@ export default function SettingsBar() {
 }
 
 function Dialog() {
-	const { name, setName, workHours, setWorkingHours, setIsOpen } =
-		useSettingsContext();
+	const {
+		name,
+		setName,
+		workHours,
+		setWorkingHours,
+		pause,
+		setPause,
+		setIsOpen,
+	} = useSettingsContext();
 
 	return (
 		<div className="absolute flex justify-center items-center inset-0 bg-black/80 overflow-hidden">
@@ -49,6 +56,7 @@ function Dialog() {
 
 					setName(formData.get("firstname") as string);
 					setWorkingHours(Number(formData.get("workHours")) * 1000 * 60 * 60);
+					setPause(Number(formData.get("pause")) * 1000 * 60 * 60);
 
 					return setIsOpen(false);
 				}}
@@ -73,6 +81,18 @@ function Dialog() {
 						defaultValue={workHours / (1000 * 60 * 60)}
 						step={0.25}
 						name="workHours"
+					/>
+				</label>
+
+				<label className="flex flex-col">
+					Break time
+					<input
+						type="number"
+						className="border p-1 px-2 rounded-md"
+						placeholder="1 hour"
+						defaultValue={pause / (1000 * 60 * 60)}
+						step={0.25}
+						name="pause"
 					/>
 				</label>
 
