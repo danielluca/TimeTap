@@ -9,7 +9,6 @@ export default function MainBar() {
 		name,
 		isCheckedIn,
 		setIsCheckedIn,
-		plannedCheckoutTime,
 		setPlannedCheckoutTime,
 	} = useSettingsContext();
 
@@ -48,8 +47,7 @@ export default function MainBar() {
 
 		return (
 			<>
-				there are <Timer plannedCheckoutTime={plannedCheckoutTime} /> hours left
-				until you can{" "}
+				there are <Timer /> hours left until you can{" "}
 				<button
 					type="button"
 					className="inline text-left hover:text-white/80 transition-colors underline"
