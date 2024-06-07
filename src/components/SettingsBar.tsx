@@ -8,7 +8,9 @@ export default function SettingsBar() {
 
 	return (
 		<div className="flex flex-wrap justify-between gap-8 font-medium p-8">
-			<div>TimeTap</div>
+			<div className="inline-flex items-center gap-2">
+				<img src="/favicon.png" alt="Logo" width={20} /> TimeTap
+			</div>
 
 			<div className="flex gap-3">
 				<button
