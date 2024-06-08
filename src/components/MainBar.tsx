@@ -1,4 +1,4 @@
-import { Play, PlayCircle, StopCircle } from "@phosphor-icons/react";
+import { PlayCircle, StopCircle } from "@phosphor-icons/react";
 import { useSettingsContext } from "../hooks/useSettingsContext";
 import { getSalutation } from "../utility/getSalutation";
 import Timer from "./Timer";
