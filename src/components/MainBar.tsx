@@ -25,7 +25,6 @@ export default function MainBar() {
 
 			return;
 		}
-
 		setIsCheckedIn(false);
 		setCheckedInTime(0);
 		setPlannedCheckoutTime(null);

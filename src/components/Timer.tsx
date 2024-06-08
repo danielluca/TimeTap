@@ -18,8 +18,12 @@ export default function Timer() {
 		if (currentTime <= 0) {
 			setCurrentTime(0);
 			setIsCheckedIn(false);
-			new Notification("You have reached your checkout time!");
-			return clearInterval(interval);
+			clearInterval(interval);
+
+			return () =>
+				setTimeout(() => {
+					new Notification("Your work day has ended!");
+				}, 1000);
 		}
 
 		return () => clearInterval(interval);

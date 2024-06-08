@@ -81,7 +81,7 @@ function Dialog() {
 			Notification.requestPermission().then((permission) => {
 				if (permission === "granted") {
 					setNotificationPermission("granted");
-					new Notification("Notifications are enabled");
+					new Notification("Thank you for allowing notifications!");
 				}
 			});
 		}
@@ -105,7 +105,7 @@ function Dialog() {
 						<span>Name</span>
 						<input
 							type="text"
-							className="border p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
+							className="border border-slate-200 p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
 							placeholder="Your name"
 							defaultValue={name}
 							name="firstname"
@@ -119,7 +119,7 @@ function Dialog() {
 						<span>Working time</span>
 						<input
 							type="time"
-							className="border p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
+							className="border border-slate-200 p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
 							placeholder="8 hours"
 							defaultValue={formatTime(workHours).short}
 							name="workHours"
@@ -135,7 +135,7 @@ function Dialog() {
 						<span>Break time</span>
 						<input
 							type="time"
-							className="border p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
+							className="border border-slate-200 p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
 							placeholder="1 hour"
 							defaultValue={formatTime(pause).short}
 							name="pause"
@@ -186,17 +186,16 @@ function Dialog() {
 						</fieldset>
 					</label>
 
-					<button
-						className="bg-slate-200 text-black px-4 py-2 rounded-md hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center transition-colors disabled:hover:bg-green-200 disabled:bg-green-200"
-						type="button"
-						onClick={() => requestForNotificationPermission()}
-						disabled={notificationPermission === "granted"}
-					>
-						<BellRinging weight="bold" color="currentColor" />
-						{notificationPermission === "default" && "Activate notifications"}
-						{notificationPermission === "granted" && "Notifications are active"}
-						{notificationPermission === "denied" && "Notifications are blocked"}
-					</button>
+					{notificationPermission !== "granted" && (
+						<button
+							className="bg-slate-200 text-black text-base tracking-normal px-4 py-2 rounded-md hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center transition-colors disabled:hover:bg-green-200 disabled:bg-green-200"
+							type="button"
+							onClick={() => requestForNotificationPermission()}
+						>
+							<BellRinging weight="bold" color="currentColor" />
+							Allow notifications
+						</button>
+					)}
 				</main>
 
 				<footer>
@@ -204,7 +203,7 @@ function Dialog() {
 						type="submit"
 						className="bg-slate-200 text-black px-4 py-2 rounded-md hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center w-full transition-colors font-semibold"
 					>
-						Save settings
+						Done
 					</button>
 				</footer>
 			</form>
