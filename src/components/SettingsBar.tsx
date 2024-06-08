@@ -10,7 +10,8 @@ import { formatTime } from "../utility/formatTime";
 import convertTimeToMilliseconds from "../utility/convertToMilliseconds";
 
 export default function SettingsBar() {
-	const { workHours, pause, isOpen, setIsOpen } = useSettingsContext();
+	const { workHours, pause, showSettings, setShowSettings } =
+		useSettingsContext();
 
 	return (
 		<div className="flex flex-wrap justify-between gap-8 font-medium p-8">
@@ -23,7 +24,7 @@ export default function SettingsBar() {
 					type="button"
 					className="inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-md px-2 py-1"
 					title="Set your working time"
-					onClick={() => setIsOpen(true)}
+					onClick={() => setShowSettings(true)}
 				>
 					<ClockCountdown weight="fill" /> {formatTime(workHours).short} working
 					time
@@ -33,7 +34,7 @@ export default function SettingsBar() {
 					type="button"
 					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-md px-2 py-1"
 					title="Set your break time"
-					onClick={() => setIsOpen(true)}
+					onClick={() => setShowSettings(true)}
 				>
 					<BowlFood weight="fill" /> {formatTime(pause).short} break time
 				</button>
@@ -42,13 +43,13 @@ export default function SettingsBar() {
 					type="button"
 					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-md px-2 py-1"
 					title="Settings"
-					onClick={() => setIsOpen(true)}
+					onClick={() => setShowSettings(true)}
 				>
 					<GearSix weight="fill" />
 				</button>
 			</div>
 
-			{isOpen && createPortal(<Dialog />, document.body)}
+			{showSettings && createPortal(<Dialog />, document.body)}
 		</div>
 	);
 }
@@ -61,7 +62,7 @@ function Dialog() {
 		setWorkingHours,
 		pause,
 		setPause,
-		setIsOpen,
+		setShowSettings,
 		notificationPermission,
 		setNotificationPermission,
 	} = useSettingsContext();
@@ -95,7 +96,7 @@ function Dialog() {
 					);
 					setPause(convertTimeToMilliseconds(formData.get("pause") as string));
 
-					return setIsOpen(false);
+					return setShowSettings(false);
 				}}
 			>
 				<header>

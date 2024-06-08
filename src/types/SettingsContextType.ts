@@ -11,8 +11,8 @@ export type SettingsContextType = {
 	setPause: Dispatch<SetStateAction<number>>;
 	plannedCheckoutTime: number | null;
 	setPlannedCheckoutTime: Dispatch<SetStateAction<number | null>>;
-	isOpen: boolean;
-	setIsOpen: Dispatch<SetStateAction<boolean>>;
+	showSettings: boolean;
+	setShowSettings: Dispatch<SetStateAction<boolean>>;
 	checkedInTime: number;
 	setCheckedInTime: Dispatch<SetStateAction<number>>;
  notificationPermission: NotificationPermission;

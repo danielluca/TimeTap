@@ -32,7 +32,7 @@ export default function SettingsContextProvider({
 	);
 	const [notificationPermission, setNotificationPermission] =
 		useState<NotificationPermission>("default");
-	const [isOpen, setIsOpen] = useState(false);
+	const [showSettings, setShowSettings] = useState(false);
 
 	// Check if Notifications are granted
 	useEffect(() => {
@@ -82,8 +82,8 @@ export default function SettingsContextProvider({
 				setPlannedCheckoutTime,
 				pause,
 				setPause,
-				isOpen,
-				setIsOpen,
+				showSettings,
+				setShowSettings,
 				checkedInTime,
 				setCheckedInTime,
 				notificationPermission,
