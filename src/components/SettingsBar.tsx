@@ -93,14 +93,6 @@ function Dialog() {
 				className="p-8 bg-slate-100 rounded-xl flex flex-col gap-8 w-full max-w-md shadow-2xl shadow-slate-800"
 				onSubmit={(e) => {
 					e.preventDefault();
-					const formData = new FormData(e.target as HTMLFormElement);
-
-					setName((formData.get("firstname") as string) ?? "");
-					setWorkingHours(
-						convertTimeToMilliseconds(formData.get("workHours") as string),
-					);
-					setPause(convertTimeToMilliseconds(formData.get("pause") as string));
-
 					return setShowSettings(false);
 				}}
 			>
@@ -117,6 +109,9 @@ function Dialog() {
 							placeholder="Your name"
 							defaultValue={name}
 							name="firstname"
+							onChange={(e) => {
+								return setName(e.target.value);
+							}}
 						/>
 					</label>
 
@@ -128,6 +123,11 @@ function Dialog() {
 							placeholder="8 hours"
 							defaultValue={formatTime(workHours).short}
 							name="workHours"
+							onChange={(e) => {
+								return setWorkingHours(
+									convertTimeToMilliseconds(e.target.value),
+								);
+							}}
 						/>
 					</label>
 
@@ -139,6 +139,9 @@ function Dialog() {
 							placeholder="1 hour"
 							defaultValue={formatTime(pause).short}
 							name="pause"
+							onChange={(e) => {
+								return setPause(convertTimeToMilliseconds(e.target.value));
+							}}
 						/>
 					</label>
 
@@ -150,7 +153,7 @@ function Dialog() {
 								<label
 									key={image.imageUrl}
 									className={
-										"flex flex-1 overflow-hidden rounded-md cursor-pointer hover:opacity-80 transition-opacity relative"
+										"flex flex-1 overflow-hidden rounded-md cursor-pointer hover:opacity-80 transition-opacity relative bg-slate-200 aspect-square size-12"
 									}
 								>
 									<input
@@ -165,7 +168,7 @@ function Dialog() {
 									<img
 										src={image.imageUrl}
 										alt={`Background by ${image.creator}`}
-										className={classNames("object-cover", {
+										className={classNames("object-cover w-full h-full", {
 											"opacity-30": image.imageUrl === backgroundImage.imageUrl,
 										})}
 									/>
@@ -184,7 +187,7 @@ function Dialog() {
 					</label>
 
 					<button
-						className="bg-slate-200 text-black px-4 py-2 rounded-md hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center transition-colors  disabled:hover:bg-green-200 disabled:bg-green-200"
+						className="bg-slate-200 text-black px-4 py-2 rounded-md hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center transition-colors disabled:hover:bg-green-200 disabled:bg-green-200"
 						type="button"
 						onClick={() => requestForNotificationPermission()}
 						disabled={notificationPermission === "granted"}
