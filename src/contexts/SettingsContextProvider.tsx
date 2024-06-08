@@ -5,6 +5,7 @@ import {
 	type Dispatch,
 	type SetStateAction,
 	useMemo,
+	useEffect,
 } from "react";
 
 type SettingsContextType = {
@@ -44,6 +45,20 @@ export default function SettingsContextProvider({
 		session ? JSON.parse(session).plannedCheckoutTime : null,
 	);
 	const [isOpen, setIsOpen] = useState(false);
+
+	useEffect(() => {
+		if (isCheckedIn) {
+			document.title = "Checked in";
+			document
+				.querySelector('link[rel="icon"]')
+				?.setAttribute("href", "/favicon-checked-in.png");
+		} else {
+			document.title = "Checked out";
+			document
+				.querySelector('link[rel="icon"]')
+				?.setAttribute("href", "/favicon.png");
+		}
+	}, [isCheckedIn]);
 
 	useMemo(() => {
 		localStorage.setItem(

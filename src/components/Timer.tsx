@@ -19,7 +19,6 @@ export default function Timer() {
 			setCurrentTime(0);
 			setIsCheckedIn(false);
 			new Notification("You have reached your checkout time!");
-			document.title = "TimeTap";
 			return clearInterval(interval);
 		}
 

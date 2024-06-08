@@ -19,7 +19,6 @@ export default function MainBar() {
 
 			setIsCheckedIn(true);
 			setPlannedCheckoutTime(now + chekoutTime);
-			document.title = "Checked	in";
 
 			return;
 		}
