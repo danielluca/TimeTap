@@ -23,6 +23,7 @@ export default function Timer() {
 		}
 
 		return () => clearInterval(interval);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentTime]);
 
 	return (
