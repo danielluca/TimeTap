@@ -1,4 +1,9 @@
-import { BowlFood, ClockCountdown, GearSix } from "@phosphor-icons/react";
+import {
+	BellRinging,
+	BowlFood,
+	ClockCountdown,
+	GearSix,
+} from "@phosphor-icons/react";
 import { createPortal } from "react-dom";
 import { useSettingsContext } from "../hooks/useSettingsContext";
 import { formatTime } from "../utility/formatTime";
@@ -73,9 +78,9 @@ function Dialog() {
 	}
 
 	return (
-		<div className="absolute flex justify-center items-center inset-0 bg-black/80 overflow-hidden">
+		<div className="absolute flex justify-center items-center inset-0 bg-slate-700/80 overflow-hidden">
 			<form
-				className="p-8 bg-white rounded-xl flex flex-col gap-4"
+				className="p-8 bg-slate-100 rounded-xl flex flex-col gap-8 w-full max-w-md shadow-2xl shadow-slate-800"
 				onSubmit={(e) => {
 					e.preventDefault();
 					const formData = new FormData(e.target as HTMLFormElement);
@@ -87,52 +92,66 @@ function Dialog() {
 					return setIsOpen(false);
 				}}
 			>
-				<label className="flex flex-col">
-					Name
-					<input
-						type="text"
-						className="border p-1 px-2 rounded-md"
-						placeholder="Your name"
-						defaultValue={name}
-						name="firstname"
-					/>
-				</label>
+				<header>
+					<h2 className="text-2xl font-semibold">Settings</h2>
+				</header>
 
-				<label className="flex flex-col">
-					Working time
-					<input
-						type="number"
-						className="border p-1 px-2 rounded-md"
-						placeholder="8 hours"
-						defaultValue={workHours / (1000 * 60 * 60)}
-						step={0.001}
-						min={0}
-						name="workHours"
-					/>
-				</label>
+				<main className="flex flex-col gap-4">
+					<label className="flex flex-col text-xs font-semibold uppercase tracking-tight">
+						Name
+						<input
+							type="text"
+							className="border p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
+							placeholder="Your name"
+							defaultValue={name}
+							name="firstname"
+						/>
+					</label>
 
-				<label className="flex flex-col">
-					Break time
-					<input
-						type="number"
-						className="border p-1 px-2 rounded-md"
-						placeholder="1 hour"
-						defaultValue={pause / (1000 * 60 * 60)}
-						step={0.01}
-						min={0}
-						name="pause"
-					/>
-				</label>
+					<label className="flex flex-col text-xs font-semibold uppercase tracking-tight">
+						Working time
+						<input
+							type="number"
+							className="border p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
+							placeholder="8 hours"
+							defaultValue={workHours / (1000 * 60 * 60)}
+							step={0.25}
+							min={0}
+							name="workHours"
+						/>
+					</label>
 
-				<button
-					className="bg-slate-200 text-black px-4 py-2 rounded-md hover:bg-slate-300"
-					type="button"
-					onClick={() => requestForNotificationPermission()}
-				>
-					Activate notifications
-				</button>
+					<label className="flex flex-col text-xs font-semibold uppercase tracking-tight">
+						Break time
+						<input
+							type="number"
+							className="border p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
+							placeholder="1 hour"
+							defaultValue={pause / (1000 * 60 * 60)}
+							step={0.25}
+							min={0}
+							name="pause"
+						/>
+					</label>
 
-				<button type="submit">Save</button>
+					<button
+						className="bg-slate-200 text-black px-4 py-2 rounded-md hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center transition-colors"
+						type="button"
+						onClick={() => requestForNotificationPermission()}
+					>
+						<BellRinging weight="bold" color="currentColor" />
+						Activate notifications
+					</button>
+				</main>
+
+				<footer>
+					<button
+						type="submit"
+						className="bg-slate-200 text-black px-4 py-2 rounded-md hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center w-full transition-colors font-semibold"
+					>
+						Save settings
+					</button>
+				</footer>
 			</form>
 		</div>
 	);
