@@ -7,6 +7,7 @@ import {
 } from "react";
 import type { SettingsContextType } from "../types/SettingsContextType";
 import type { Session } from "../types/Session";
+import { images } from "../constants/images";
 
 export const SettingsContext = createContext<SettingsContextType | null>(null);
 
@@ -32,6 +33,9 @@ export default function SettingsContextProvider({
 	);
 	const [notificationPermission, setNotificationPermission] =
 		useState<NotificationPermission>("default");
+	const [backgroundImage, setBackgroundImage] = useState(
+		storedSession ? session.backgroundImage : images[0],
+	);
 	const [showSettings, setShowSettings] = useState(false);
 
 	// Check if Notifications are granted
@@ -65,9 +69,18 @@ export default function SettingsContextProvider({
 				isCheckedIn,
 				plannedCheckoutTime,
 				checkedInTime,
+				backgroundImage,
 			}),
 		);
-	}, [workHours, pause, name, isCheckedIn, plannedCheckoutTime, checkedInTime]);
+	}, [
+		workHours,
+		pause,
+		name,
+		isCheckedIn,
+		plannedCheckoutTime,
+		checkedInTime,
+		backgroundImage,
+	]);
 
 	return (
 		<SettingsContext.Provider
@@ -88,6 +101,8 @@ export default function SettingsContextProvider({
 				setCheckedInTime,
 				notificationPermission,
 				setNotificationPermission,
+				backgroundImage,
+				setBackgroundImage,
 			}}
 		>
 			{children}

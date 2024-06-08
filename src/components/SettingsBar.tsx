@@ -1,6 +1,7 @@
 import {
 	BellRinging,
 	BowlFood,
+	CheckCircle,
 	ClockCountdown,
 	GearSix,
 } from "@phosphor-icons/react";
@@ -8,6 +9,8 @@ import { createPortal } from "react-dom";
 import { useSettingsContext } from "../hooks/useSettingsContext";
 import { formatTime } from "../utility/formatTime";
 import convertTimeToMilliseconds from "../utility/convertToMilliseconds";
+import { images } from "../constants/images";
+import classNames from "classnames";
 
 export default function SettingsBar() {
 	const { workHours, pause, showSettings, setShowSettings } =
@@ -65,6 +68,8 @@ function Dialog() {
 		setShowSettings,
 		notificationPermission,
 		setNotificationPermission,
+		backgroundImage,
+		setBackgroundImage,
 	} = useSettingsContext();
 
 	function requestForNotificationPermission() {
@@ -104,8 +109,8 @@ function Dialog() {
 				</header>
 
 				<main className="flex flex-col gap-4">
-					<label className="flex flex-col text-xs font-semibold uppercase tracking-tight">
-						Name
+					<label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-tight">
+						<span>Name</span>
 						<input
 							type="text"
 							className="border p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
@@ -115,8 +120,8 @@ function Dialog() {
 						/>
 					</label>
 
-					<label className="flex flex-col text-xs font-semibold uppercase tracking-tight">
-						Working time
+					<label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-tight">
+						<span>Working time</span>
 						<input
 							type="time"
 							className="border p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
@@ -126,8 +131,8 @@ function Dialog() {
 						/>
 					</label>
 
-					<label className="flex flex-col text-xs font-semibold uppercase tracking-tight">
-						Break time
+					<label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-tight">
+						<span>Break time</span>
 						<input
 							type="time"
 							className="border p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
@@ -135,6 +140,47 @@ function Dialog() {
 							defaultValue={formatTime(pause).short}
 							name="pause"
 						/>
+					</label>
+
+					<label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-tight">
+						<span>Background image</span>
+
+						<fieldset className="flex gap-2">
+							{images.map((image) => (
+								<label
+									key={image.imageUrl}
+									className={
+										"flex overflow-hidden rounded-md cursor-pointer hover:opacity-80 transition-opacity relative"
+									}
+								>
+									<input
+										type="radio"
+										name="background"
+										value={image.imageUrl}
+										className="sr-only"
+										onClick={() => {
+											return setBackgroundImage(image);
+										}}
+									/>
+									<img
+										src={image.imageUrl}
+										alt={`Background by ${image.creator}`}
+										className={classNames("object-cover", {
+											"opacity-30": image.imageUrl === backgroundImage.imageUrl,
+										})}
+									/>
+									{image.imageUrl === backgroundImage.imageUrl && (
+										<div className="absolute w-full h-full flex justify-center items-center">
+											<CheckCircle
+												size={18}
+												weight="bold"
+												color="currentColor"
+											/>
+										</div>
+									)}
+								</label>
+							))}
+						</fieldset>
 					</label>
 
 					<button

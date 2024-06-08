@@ -17,4 +17,6 @@ export type SettingsContextType = {
 	setCheckedInTime: Dispatch<SetStateAction<number>>;
  notificationPermission: NotificationPermission;
  setNotificationPermission: Dispatch<SetStateAction<NotificationPermission>>;
+	backgroundImage: { imageUrl: string; creator: string; profileUrl: string; };
+	setBackgroundImage: Dispatch<SetStateAction<{ imageUrl: string; creator: string; profileUrl: string; }>>;
 };

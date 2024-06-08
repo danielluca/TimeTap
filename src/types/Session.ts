@@ -8,4 +8,5 @@ export type Session = Pick<
 	| "name"
 	| "plannedCheckoutTime"
 	| "checkedInTime"
+	|	"backgroundImage"
 >;

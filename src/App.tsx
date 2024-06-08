@@ -10,8 +10,8 @@ export default function App() {
 				<SettingsContextProvider>
 					<SettingsBar />
 					<MainBar />
+					<BackgroundImage />
 				</SettingsContextProvider>
-				<BackgroundImage />
 			</main>
 		</>
 	);
