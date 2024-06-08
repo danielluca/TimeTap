@@ -7,6 +7,7 @@ import {
 import { createPortal } from "react-dom";
 import { useSettingsContext } from "../hooks/useSettingsContext";
 import { formatTime } from "../utility/formatTime";
+import convertTimeToMilliseconds from "../utility/convertToMilliseconds";
 
 export default function SettingsBar() {
 	const { workHours, pause, isOpen, setIsOpen } = useSettingsContext();
@@ -61,6 +62,8 @@ function Dialog() {
 		pause,
 		setPause,
 		setIsOpen,
+		notificationPermission,
+		setNotificationPermission,
 	} = useSettingsContext();
 
 	function requestForNotificationPermission() {
@@ -71,6 +74,7 @@ function Dialog() {
 		if (Notification.permission !== "denied") {
 			Notification.requestPermission().then((permission) => {
 				if (permission === "granted") {
+					setNotificationPermission("granted");
 					new Notification("Notifications are enabled");
 				}
 			});
@@ -86,8 +90,8 @@ function Dialog() {
 					const formData = new FormData(e.target as HTMLFormElement);
 
 					setName(formData.get("firstname") as string);
-					setWorkingHours(Number(formData.get("workHours")) * 1000 * 60 * 60);
-					setPause(Number(formData.get("pause")) * 1000 * 60 * 60);
+					setWorkingHours(convertTimeToMilliseconds(formData.get("workHours")));
+					setPause(convertTimeToMilliseconds(formData.get("pause")));
 
 					return setIsOpen(false);
 				}}
@@ -111,12 +115,10 @@ function Dialog() {
 					<label className="flex flex-col text-xs font-semibold uppercase tracking-tight">
 						Working time
 						<input
-							type="number"
+							type="time"
 							className="border p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
 							placeholder="8 hours"
-							defaultValue={workHours / (1000 * 60 * 60)}
-							step={0.25}
-							min={0}
+							defaultValue={formatTime(workHours).short}
 							name="workHours"
 						/>
 					</label>
@@ -124,23 +126,24 @@ function Dialog() {
 					<label className="flex flex-col text-xs font-semibold uppercase tracking-tight">
 						Break time
 						<input
-							type="number"
+							type="time"
 							className="border p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
 							placeholder="1 hour"
-							defaultValue={pause / (1000 * 60 * 60)}
-							step={0.25}
-							min={0}
+							defaultValue={formatTime(pause).short}
 							name="pause"
 						/>
 					</label>
 
 					<button
-						className="bg-slate-200 text-black px-4 py-2 rounded-md hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center transition-colors"
+						className="bg-slate-200 text-black px-4 py-2 rounded-md hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center transition-colors  disabled:hover:bg-green-200 disabled:bg-green-200"
 						type="button"
 						onClick={() => requestForNotificationPermission()}
+						disabled={notificationPermission === "granted"}
 					>
 						<BellRinging weight="bold" color="currentColor" />
-						Activate notifications
+						{notificationPermission === "default" && "Activate notifications"}
+						{notificationPermission === "granted" && "Notifications are active"}
+						{notificationPermission === "denied" && "Notifications are blocked"}
 					</button>
 				</main>
 

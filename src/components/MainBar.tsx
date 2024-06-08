@@ -10,6 +10,7 @@ export default function MainBar() {
 		isCheckedIn,
 		setIsCheckedIn,
 		setPlannedCheckoutTime,
+		setCheckedInTime,
 	} = useSettingsContext();
 
 	function handleCheckIn() {
@@ -18,12 +19,14 @@ export default function MainBar() {
 			const chekoutTime = workHours + pause;
 
 			setIsCheckedIn(true);
+			setCheckedInTime(now);
 			setPlannedCheckoutTime(now + chekoutTime);
 
 			return;
 		}
 
 		setIsCheckedIn(false);
+		setCheckedInTime(0);
 		setPlannedCheckoutTime(null);
 
 		return;
