@@ -17,9 +17,9 @@ export default function SettingsContextProvider({
 	children,
 }: { children: ReactNode }) {
 	const [workHours, setWorkingHours] = useState(
-		storedSession ? session.workHours : 0,
+		storedSession ? session.workHours : 28800000,
 	);
-	const [pause, setPause] = useState(storedSession ? session.pause : 0);
+	const [pause, setPause] = useState(storedSession ? session.pause : 2700000);
 	const [isCheckedIn, setIsCheckedIn] = useState(
 		storedSession ? session.isCheckedIn : false,
 	);

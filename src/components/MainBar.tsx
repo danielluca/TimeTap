@@ -66,7 +66,8 @@ export default function MainBar() {
 	return (
 		<div className="p-[10vw]">
 			<h1 className="text-[max(8ch,_4.5vw)] font-medium tracking-[-0.2vw] leading-none text-balance">
-				Good {getSalutation()} {name}, {getText()}
+				Good {getSalutation()}
+				{name ? ` ${name},` : ","} {getText()}
 			</h1>
 		</div>
 	);
