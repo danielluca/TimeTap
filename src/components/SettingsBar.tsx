@@ -89,9 +89,11 @@ function Dialog() {
 					e.preventDefault();
 					const formData = new FormData(e.target as HTMLFormElement);
 
-					setName(formData.get("firstname") as string);
-					setWorkingHours(convertTimeToMilliseconds(formData.get("workHours")));
-					setPause(convertTimeToMilliseconds(formData.get("pause")));
+					setName((formData.get("firstname") as string) ?? "");
+					setWorkingHours(
+						convertTimeToMilliseconds(formData.get("workHours") as string),
+					);
+					setPause(convertTimeToMilliseconds(formData.get("pause") as string));
 
 					return setIsOpen(false);
 				}}
