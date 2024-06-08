@@ -1,3 +1,4 @@
+import { Play, PlayCircle, StopCircle } from "@phosphor-icons/react";
 import { useSettingsContext } from "../hooks/useSettingsContext";
 import { getSalutation } from "../utility/getSalutation";
 import Timer from "./Timer";
@@ -39,10 +40,10 @@ export default function MainBar() {
 					ready to{" "}
 					<button
 						type="button"
-						className="inline text-left hover:text-white/80 transition-colors underline"
+						className="inline text-left hover:text-green-200 transition-colors"
 						onClick={() => handleCheckIn()}
 					>
-						start your work
+						start <PlayCircle className="inline" weight="fill" /> your work
 					</button>{" "}
 					day?
 				</>
@@ -53,10 +54,10 @@ export default function MainBar() {
 				there are <Timer /> hours left until you can{" "}
 				<button
 					type="button"
-					className="inline text-left hover:text-white/80 transition-colors underline"
+					className="inline text-left hover:text-red-200 transition-colors"
 					onClick={() => handleCheckIn()}
 				>
-					end your work
+					end <StopCircle className="inline" weight="fill" /> your work
 				</button>{" "}
 				day
 			</>
@@ -65,9 +66,10 @@ export default function MainBar() {
 
 	return (
 		<div className="p-[10vw]">
-			<h1 className="text-[max(8ch,_4.5vw)] font-medium tracking-[-0.2vw] leading-none text-balance">
+			<h1 className="text-[max(8ch,_4.5vw)] font-medium tracking-[-0.2vw] leading-none">
 				Good {getSalutation()}
-				{name ? ` ${name},` : ","} {getText()}
+				{name ? ` ${name},` : ","}
+				<br /> <span className="inline-block max-w-[22ch]">{getText()}</span>
 			</h1>
 		</div>
 	);
