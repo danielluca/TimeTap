@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSettingsContext } from "../hooks/useSettingsContext";
 import { formatTime } from "../utility/formatTime";
 
@@ -10,24 +10,30 @@ export default function Timer() {
 		plannedCheckoutTime ? plannedCheckoutTime - now : 0,
 	);
 
+	const workerRef = useRef<Worker>();
+
 	useEffect(() => {
-		const interval = setInterval(() => {
-			setCurrentTime((prevTime) => prevTime - 1000);
-		}, 1000);
+		workerRef.current = new Worker(
+			new URL("../workers/timerWorker.ts", import.meta.url),
+		);
+		workerRef.current.postMessage(currentTime);
+		workerRef.current.onmessage = (event) => {
+			setCurrentTime(event.data);
 
-		if (currentTime <= 0) {
-			setCurrentTime(0);
-			setIsCheckedIn(false);
-			clearInterval(interval);
+			if (event.data <= 0) {
+				setCurrentTime(0);
+				setIsCheckedIn(false);
+				return new Notification("Your work day has ended!");
+			}
+		};
 
-			return () =>
-				setTimeout(() => {
-					new Notification("Your work day has ended!");
-				}, 1000);
-		}
+		return () => {
+			workerRef.current?.terminate();
+		};
+	}, []);
 
-		return () => clearInterval(interval);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+	useEffect(() => {
+		workerRef.current?.postMessage(currentTime);
 	}, [currentTime]);
 
 	return (
