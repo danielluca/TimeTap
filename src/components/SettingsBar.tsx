@@ -150,7 +150,7 @@ function Dialog() {
 								<label
 									key={image.imageUrl}
 									className={
-										"flex overflow-hidden rounded-md cursor-pointer hover:opacity-80 transition-opacity relative"
+										"flex flex-1 overflow-hidden rounded-md cursor-pointer hover:opacity-80 transition-opacity relative"
 									}
 								>
 									<input
