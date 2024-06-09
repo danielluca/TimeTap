@@ -1,4 +1,4 @@
-import type { SettingsContextType } from "./SettingsContextType";
+import type { SettingsContextType } from "./SettingsContextType"
 
 export type Session = Pick<
 	SettingsContextType,
@@ -8,5 +8,5 @@ export type Session = Pick<
 	| "name"
 	| "plannedCheckoutTime"
 	| "checkedInTime"
-	|	"backgroundImage"
->;
+	| "backgroundImage"
+>

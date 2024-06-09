@@ -1,12 +1,12 @@
 export function getSalutation() {
-	const hour = new Date().getHours();
+	const hour = new Date().getHours()
 
 	switch (true) {
 		case hour < 12:
-			return "morning";
+			return "morning"
 		case hour < 18:
-			return "afternoon";
+			return "afternoon"
 		default:
-			return "evening";
+			return "evening"
 	}
 }

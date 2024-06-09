@@ -23,4 +23,4 @@ export const images = [
 		creator: "Milad Fakurian",
 		profileUrl: "https://unsplash.com/de/@fakurian",
 	},
-];
+]

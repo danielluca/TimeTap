@@ -4,17 +4,17 @@ import {
 	CheckCircle,
 	ClockCountdown,
 	GearSix,
-} from "@phosphor-icons/react";
-import { createPortal } from "react-dom";
-import { useSettingsContext } from "../hooks/useSettingsContext";
-import { formatTime } from "../utility/formatTime";
-import convertTimeToMilliseconds from "../utility/convertToMilliseconds";
-import { images } from "../constants/images";
-import classNames from "classnames";
+} from "@phosphor-icons/react"
+import { createPortal } from "react-dom"
+import { useSettingsContext } from "../hooks/useSettingsContext"
+import { formatTime } from "../utility/formatTime"
+import convertTimeToMilliseconds from "../utility/convertToMilliseconds"
+import { images } from "../constants/images"
+import classNames from "classnames"
 
 export default function SettingsBar() {
 	const { workHours, pause, showSettings, setShowSettings } =
-		useSettingsContext();
+		useSettingsContext()
 
 	return (
 		<div className="flex flex-wrap justify-between gap-8 font-medium p-8">
@@ -54,7 +54,7 @@ export default function SettingsBar() {
 
 			{showSettings && createPortal(<Dialog />, document.body)}
 		</div>
-	);
+	)
 }
 
 function Dialog() {
@@ -70,20 +70,20 @@ function Dialog() {
 		setNotificationPermission,
 		backgroundImage,
 		setBackgroundImage,
-	} = useSettingsContext();
+	} = useSettingsContext()
 
 	function requestForNotificationPermission() {
 		if (!("Notification" in window)) {
-			console.error("This browser does not support desktop notification");
+			console.error("This browser does not support desktop notification")
 		}
 
 		if (Notification.permission !== "denied") {
 			Notification.requestPermission().then((permission) => {
 				if (permission === "granted") {
-					setNotificationPermission("granted");
-					new Notification("Thank you for allowing notifications!");
+					setNotificationPermission("granted")
+					new Notification("Thank you for allowing notifications!")
 				}
-			});
+			})
 		}
 	}
 
@@ -92,8 +92,8 @@ function Dialog() {
 			<form
 				className="p-8 bg-slate-100 rounded-xl flex flex-col gap-8 w-full max-w-md shadow-2xl shadow-slate-800"
 				onSubmit={(e) => {
-					e.preventDefault();
-					return setShowSettings(false);
+					e.preventDefault()
+					return setShowSettings(false)
 				}}
 			>
 				<header>
@@ -110,7 +110,7 @@ function Dialog() {
 							defaultValue={name}
 							name="firstname"
 							onChange={(e) => {
-								return setName(e.target.value);
+								return setName(e.target.value)
 							}}
 						/>
 					</label>
@@ -126,7 +126,7 @@ function Dialog() {
 							onChange={(e) => {
 								return setWorkingHours(
 									convertTimeToMilliseconds(e.target.value),
-								);
+								)
 							}}
 						/>
 					</label>
@@ -140,7 +140,7 @@ function Dialog() {
 							defaultValue={formatTime(pause).short}
 							name="pause"
 							onChange={(e) => {
-								return setPause(convertTimeToMilliseconds(e.target.value));
+								return setPause(convertTimeToMilliseconds(e.target.value))
 							}}
 						/>
 					</label>
@@ -162,7 +162,7 @@ function Dialog() {
 										value={image.imageUrl}
 										className="sr-only"
 										onClick={() => {
-											return setBackgroundImage(image);
+											return setBackgroundImage(image)
 										}}
 									/>
 									<img
@@ -208,5 +208,5 @@ function Dialog() {
 				</footer>
 			</form>
 		</div>
-	);
+	)
 }

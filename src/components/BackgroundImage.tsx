@@ -1,8 +1,8 @@
-import { ArrowSquareOut } from "@phosphor-icons/react";
-import { useSettingsContext } from "../hooks/useSettingsContext";
+import { ArrowSquareOut } from "@phosphor-icons/react"
+import { useSettingsContext } from "../hooks/useSettingsContext"
 
 export default function BackgroundImage() {
-	const { backgroundImage } = useSettingsContext();
+	const { backgroundImage } = useSettingsContext()
 	// const bgImage = useMemo(() => {
 	// 	return images[Math.floor(Math.random() * images.length)];
 	// }, []);
@@ -25,5 +25,5 @@ export default function BackgroundImage() {
 				alt=""
 			/>
 		</>
-	);
+	)
 }

@@ -7,12 +7,14 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
-			"style": {
-				
-			},
 			"correctness": {
 				"useExhaustiveDependencies": "off"
 			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"semicolons": "asNeeded"
 		}
 	}
 }

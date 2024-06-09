@@ -1,7 +1,7 @@
-import { PlayCircle, StopCircle } from "@phosphor-icons/react";
-import { useSettingsContext } from "../hooks/useSettingsContext";
-import { getSalutation } from "../utility/getSalutation";
-import Timer from "./Timer";
+import { PlayCircle, StopCircle } from "@phosphor-icons/react"
+import { useSettingsContext } from "../hooks/useSettingsContext"
+import { getSalutation } from "../utility/getSalutation"
+import Timer from "./Timer"
 
 export default function MainBar() {
 	const {
@@ -12,24 +12,24 @@ export default function MainBar() {
 		setIsCheckedIn,
 		setPlannedCheckoutTime,
 		setCheckedInTime,
-	} = useSettingsContext();
+	} = useSettingsContext()
 
 	function handleCheckIn() {
 		if (!isCheckedIn) {
-			const now = Date.now();
-			const chekoutTime = workHours + pause;
+			const now = Date.now()
+			const chekoutTime = workHours + pause
 
-			setIsCheckedIn(true);
-			setCheckedInTime(now);
-			setPlannedCheckoutTime(now + chekoutTime);
+			setIsCheckedIn(true)
+			setCheckedInTime(now)
+			setPlannedCheckoutTime(now + chekoutTime)
 
-			return;
+			return
 		}
-		setIsCheckedIn(false);
-		setCheckedInTime(0);
-		setPlannedCheckoutTime(null);
+		setIsCheckedIn(false)
+		setCheckedInTime(0)
+		setPlannedCheckoutTime(null)
 
-		return;
+		return
 	}
 
 	const getText = () => {
@@ -46,7 +46,7 @@ export default function MainBar() {
 					</button>{" "}
 					day?
 				</>
-			);
+			)
 
 		return (
 			<>
@@ -60,8 +60,8 @@ export default function MainBar() {
 				</button>{" "}
 				day
 			</>
-		);
-	};
+		)
+	}
 
 	return (
 		<div className="p-[10vw]">
@@ -71,5 +71,5 @@ export default function MainBar() {
 				<br /> <span className="inline-block max-w-[22ch]">{getText()}</span>
 			</h1>
 		</div>
-	);
+	)
 }
