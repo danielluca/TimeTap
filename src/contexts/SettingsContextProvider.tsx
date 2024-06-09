@@ -49,12 +49,12 @@ export default function SettingsContextProvider({
 			document.title = "Checked in";
 			document
 				.querySelector('link[rel="icon"]')
-				?.setAttribute("href", "./favicon-checked-in.png");
+				?.setAttribute("href", "favicon-checked-in.png");
 		} else {
 			document.title = "Checked out";
 			document
 				.querySelector('link[rel="icon"]')
-				?.setAttribute("href", "./favicon.png");
+				?.setAttribute("href", "favicon.png");
 		}
 	}, [isCheckedIn]);
 
