@@ -12,12 +12,12 @@ import convertTimeToMilliseconds from "../utility/convertToMilliseconds"
 import { images } from "../constants/images"
 import classNames from "classnames"
 
-export default function SettingsBar() {
+export default function Settings() {
 	const { workHours, pause, showSettings, setShowSettings } =
 		useSettingsContext()
 
 	return (
-		<div className="flex flex-wrap justify-between gap-8 font-medium p-8">
+		<header className="flex flex-wrap justify-between gap-8 font-medium p-8">
 			<div className="inline-flex items-center gap-2">
 				<img src="logo.svg" alt="Logo" width={20} /> TimeTap
 			</div>
@@ -53,7 +53,7 @@ export default function SettingsBar() {
 			</div>
 
 			{showSettings && createPortal(<Dialog />, document.body)}
-		</div>
+		</header>
 	)
 }
 

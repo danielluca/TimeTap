@@ -3,7 +3,7 @@ import { useSettingsContext } from "../hooks/useSettingsContext"
 import { getSalutation } from "../utility/getSalutation"
 import Timer from "./Timer"
 
-export default function MainBar() {
+export default function Main() {
 	const {
 		workHours,
 		pause,
@@ -64,12 +64,12 @@ export default function MainBar() {
 	}
 
 	return (
-		<div className="p-[10vw]">
+		<main className="p-[10vw]">
 			<h1 className="text-[max(8ch,_4.5vw)] font-medium tracking-[-0.2vw] leading-none">
 				Good {getSalutation()}
 				{name ? ` ${name},` : ","}
 				<br /> <span className="inline-block max-w-[22ch]">{getText()}</span>
 			</h1>
-		</div>
+		</main>
 	)
 }
