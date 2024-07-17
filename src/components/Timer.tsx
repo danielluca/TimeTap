@@ -34,7 +34,7 @@ export default function Timer() {
 
 	useEffect(() => {
 		workerRef.current?.postMessage(currentTime)
-	}, [currentTime])
+	}, [now])
 
 	return (
 		<span className='[font-feature-settings:"tnum"] bg-white/30 inline-flex leading-none rounded-xl overflow-hidden pl-2 pr-3 pb-0.5 py-0 text-left'>
