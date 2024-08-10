@@ -25,7 +25,7 @@ export default function Settings() {
 			<div className="flex gap-3">
 				<button
 					type="button"
-					className="inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-md px-2 py-1"
+					className="inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
 					title="Set your working time"
 					onClick={() => setShowSettings(true)}
 				>
@@ -35,7 +35,7 @@ export default function Settings() {
 
 				<button
 					type="button"
-					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-md px-2 py-1"
+					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
 					title="Set your break time"
 					onClick={() => setShowSettings(true)}
 				>
@@ -44,7 +44,7 @@ export default function Settings() {
 
 				<button
 					type="button"
-					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-md px-2 py-1"
+					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
 					title="Settings"
 					onClick={() => setShowSettings(true)}
 				>
@@ -88,7 +88,7 @@ function Dialog() {
 	}
 
 	return (
-		<div className="absolute flex justify-center items-center inset-0 bg-slate-700/80 overflow-hidden">
+		<div className="absolute flex justify-center items-center inset-0 bg-slate-700/90 overflow-hidden">
 			<form
 				className="p-8 bg-slate-100 rounded-xl flex flex-col gap-8 w-full max-w-md shadow-2xl shadow-slate-800"
 				onSubmit={(e) => {
@@ -105,7 +105,7 @@ function Dialog() {
 						<span>Name</span>
 						<input
 							type="text"
-							className="border border-slate-200 p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
+							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 							placeholder="Your name"
 							defaultValue={name}
 							name="firstname"
@@ -119,7 +119,7 @@ function Dialog() {
 						<span>Working time</span>
 						<input
 							type="time"
-							className="border border-slate-200 p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
+							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 							placeholder="8 hours"
 							defaultValue={formatTime(workHours).short}
 							name="workHours"
@@ -135,7 +135,7 @@ function Dialog() {
 						<span>Break time</span>
 						<input
 							type="time"
-							className="border border-slate-200 p-2 px-3 rounded-md text-base font-normal tracking-normal bg-slate-50"
+							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 							placeholder="1 hour"
 							defaultValue={formatTime(pause).short}
 							name="pause"
@@ -153,7 +153,7 @@ function Dialog() {
 								<label
 									key={image.imageUrl}
 									className={
-										"flex overflow-hidden rounded-md cursor-pointer hover:opacity-80 transition-opacity relative bg-slate-200 aspect-video"
+										"flex overflow-hidden rounded-lg cursor-pointer hover:opacity-80 transition-opacity relative bg-slate-200 aspect-video"
 									}
 								>
 									<input
@@ -188,7 +188,7 @@ function Dialog() {
 
 					{notificationPermission !== "granted" && (
 						<button
-							className="bg-slate-200 text-black text-base tracking-normal px-4 py-2 rounded-md hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center transition-colors disabled:hover:bg-green-200 disabled:bg-green-200"
+							className="bg-slate-200 text-black text-base tracking-normal px-4 py-2 rounded-lg hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center transition-colors disabled:hover:bg-green-200 disabled:bg-green-200"
 							type="button"
 							onClick={() => requestForNotificationPermission()}
 						>
@@ -201,7 +201,7 @@ function Dialog() {
 				<footer>
 					<button
 						type="submit"
-						className="bg-slate-200 text-black px-4 py-2 rounded-md hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center w-full transition-colors font-semibold"
+						className="bg-slate-200 text-black px-4 py-2 rounded-lg hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center w-full transition-colors font-semibold"
 					>
 						Done
 					</button>
