@@ -148,12 +148,12 @@ function Dialog() {
 					<label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-tight">
 						<span>Background image</span>
 
-						<fieldset className="flex gap-2">
+						<fieldset className="grid grid-cols-3 gap-2">
 							{images.map((image) => (
 								<label
 									key={image.imageUrl}
 									className={
-										"flex flex-1 overflow-hidden rounded-md cursor-pointer hover:opacity-80 transition-opacity relative bg-slate-200 aspect-square size-12"
+										"flex overflow-hidden rounded-md cursor-pointer hover:opacity-80 transition-opacity relative bg-slate-200 aspect-video"
 									}
 								>
 									<input
