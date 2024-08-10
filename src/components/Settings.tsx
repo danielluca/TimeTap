@@ -25,7 +25,7 @@ export default function Settings() {
 			<div className="flex gap-3">
 				<button
 					type="button"
-					className="inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
+					className="hidden md:inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
 					title="Set your working time"
 					onClick={() => setShowSettings(true)}
 				>
@@ -35,7 +35,7 @@ export default function Settings() {
 
 				<button
 					type="button"
-					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
+					className="hidden group relative md:inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
 					title="Set your break time"
 					onClick={() => setShowSettings(true)}
 				>
@@ -44,7 +44,7 @@ export default function Settings() {
 
 				<button
 					type="button"
-					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
+					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1 aspect-square"
 					title="Settings"
 					onClick={() => setShowSettings(true)}
 				>
@@ -88,9 +88,9 @@ function Dialog() {
 	}
 
 	return (
-		<div className="absolute flex justify-center items-center inset-0 bg-slate-700/90 overflow-hidden">
+		<div className="absolute flex justify-center md:items-center inset-0 bg-slate-700/90 overflow-hidden p-4">
 			<form
-				className="p-8 bg-slate-100 rounded-xl flex flex-col gap-8 w-full max-w-md shadow-2xl shadow-slate-800"
+				className="p-8 bg-slate-100 rounded-xl flex flex-col gap-8 w-full max-w-md shadow-2xl shadow-slate-800 h-fit"
 				onSubmit={(e) => {
 					e.preventDefault()
 					return setShowSettings(false)
