@@ -8,16 +8,19 @@
     "build": "tsc && vite build",
     "lint": "biome lint ./src/**/*",
     "format": "biome format --write ./src/**/*",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "tauri": "tauri"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.5",
+    "@tauri-apps/api": "^1.6.0",
     "classnames": "^2.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.3",
+    "@tauri-apps/cli": "^1.6.0",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
