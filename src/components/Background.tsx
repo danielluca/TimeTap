@@ -7,7 +7,7 @@ export default function Background() {
 	return (
 		<div>
 			<a
-				href={backgroundImage.profileUrl}
+				href={`https://unsplash.com/${backgroundImage.profileHandle}`}
 				className="bg-white/30 inline-flex items-center text-white rounded px-2 pr-1 absolute right-0 bottom-0 m-8 gap-2 text-sm opacity-50 hover:opacity-100 transition-all"
 				target="_blank"
 				rel="noopener noreferrer"
