@@ -4,43 +4,37 @@ import { getSalutation } from "../utility/getSalutation"
 import Timer from "./Timer"
 
 export default function Main() {
-	const {
-		workHours,
-		pause,
-		name,
-		isCheckedIn,
-		setIsCheckedIn,
-		setPlannedCheckoutTime,
-		setCheckedInTime,
-	} = useSettingsContext()
+	const { name, timeState, setTimeState } = useSettingsContext()
 
-	function handleCheckIn() {
-		if (!isCheckedIn) {
-			const now = Date.now()
-			const chekoutTime = workHours + pause
+	const startTimer = () => {
+		const totalMinutes =
+			(timeState.workHours + timeState.breakHours) * 60 * 60 * 1000
+		setTimeState((prev) => ({
+			...prev,
+			endTime: Date.now() + totalMinutes,
+			isRunning: true,
+			remainingTime: totalMinutes,
+		}))
+	}
 
-			setIsCheckedIn(true)
-			setCheckedInTime(now)
-			setPlannedCheckoutTime(now + chekoutTime)
-
-			return
-		}
-		setIsCheckedIn(false)
-		setCheckedInTime(0)
-		setPlannedCheckoutTime(null)
-
-		return
+	const resetTimer = () => {
+		setTimeState((prev) => ({
+			...prev,
+			endTime: null,
+			isRunning: false,
+			remainingTime: 0,
+		}))
 	}
 
 	const getText = () => {
-		if (!isCheckedIn)
+		if (!timeState.isRunning)
 			return (
 				<>
 					ready to{" "}
 					<button
 						type="button"
 						className="inline text-left hover:text-green-200 transition-colors"
-						onClick={() => handleCheckIn()}
+						onClick={() => startTimer()}
 					>
 						start <PlayCircle className="inline" weight="fill" /> your work
 					</button>{" "}
@@ -54,7 +48,7 @@ export default function Main() {
 				<button
 					type="button"
 					className="inline text-left hover:text-red-200 transition-colors"
-					onClick={() => handleCheckIn()}
+					onClick={() => resetTimer()}
 				>
 					end <StopCircle className="inline" weight="fill" /> your work
 				</button>{" "}

@@ -7,14 +7,11 @@ import {
 } from "@phosphor-icons/react"
 import { createPortal } from "react-dom"
 import { useSettingsContext } from "../hooks/useSettingsContext"
-import { formatTime } from "../utility/formatTime"
-import convertTimeToMilliseconds from "../utility/convertToMilliseconds"
 import { images } from "../constants/images"
 import classNames from "classnames"
 
 export default function Settings() {
-	const { workHours, pause, showSettings, setShowSettings } =
-		useSettingsContext()
+	const { timeState, showSettings, setShowSettings } = useSettingsContext()
 
 	return (
 		<header className="flex flex-wrap justify-between gap-8 font-medium p-8">
@@ -29,8 +26,7 @@ export default function Settings() {
 					title="Set your working time"
 					onClick={() => setShowSettings(true)}
 				>
-					<ClockCountdown weight="fill" /> {formatTime(workHours).short} working
-					time
+					<ClockCountdown weight="fill" /> {timeState.workHours} working time
 				</button>
 
 				<button
@@ -39,7 +35,7 @@ export default function Settings() {
 					title="Set your break time"
 					onClick={() => setShowSettings(true)}
 				>
-					<BowlFood weight="fill" /> {formatTime(pause).short} break time
+					<BowlFood weight="fill" /> {timeState.breakHours} break time
 				</button>
 
 				<button
@@ -61,15 +57,13 @@ function Dialog() {
 	const {
 		name,
 		setName,
-		workHours,
-		setWorkingHours,
-		pause,
-		setPause,
 		setShowSettings,
 		notificationPermission,
 		setNotificationPermission,
 		backgroundImage,
 		setBackgroundImage,
+		timeState,
+		setTimeState,
 	} = useSettingsContext()
 
 	function requestForNotificationPermission() {
@@ -118,15 +112,17 @@ function Dialog() {
 					<label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-tight">
 						<span>Working time</span>
 						<input
-							type="time"
+							type="number"
+							step={0.00125}
 							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 							placeholder="8 hours"
-							defaultValue={formatTime(workHours).short}
+							defaultValue={timeState.workHours}
 							name="workHours"
 							onChange={(e) => {
-								return setWorkingHours(
-									convertTimeToMilliseconds(e.target.value),
-								)
+								return setTimeState((prev) => ({
+									...prev,
+									workHours: Number(e.target.value),
+								}))
 							}}
 						/>
 					</label>
@@ -134,13 +130,17 @@ function Dialog() {
 					<label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-tight">
 						<span>Break time</span>
 						<input
-							type="time"
+							type="number"
+							step={0.00125}
 							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 							placeholder="1 hour"
-							defaultValue={formatTime(pause).short}
+							defaultValue={timeState.breakHours}
 							name="pause"
 							onChange={(e) => {
-								return setPause(convertTimeToMilliseconds(e.target.value))
+								return setTimeState((prev) => ({
+									...prev,
+									breakHours: Number(e.target.value),
+								}))
 							}}
 						/>
 					</label>
