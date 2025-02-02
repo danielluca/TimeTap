@@ -26,7 +26,7 @@ export default function Settings() {
 					title="Set your working time"
 					onClick={() => setShowSettings(true)}
 				>
-					<ClockCountdown weight="fill" /> {timeState.workHours} working time
+					<ClockCountdown weight="fill" /> {timeState.workHours}h work time
 				</button>
 
 				<button
@@ -35,7 +35,7 @@ export default function Settings() {
 					title="Set your break time"
 					onClick={() => setShowSettings(true)}
 				>
-					<BowlFood weight="fill" /> {timeState.breakHours} break time
+					<BowlFood weight="fill" /> {timeState.breakHours}h break time
 				</button>
 
 				<button
@@ -113,7 +113,9 @@ function Dialog() {
 						<span>Working time</span>
 						<input
 							type="number"
-							step={0.00125}
+							step={0.25}
+							min={0.25}
+							max={24}
 							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 							placeholder="8 hours"
 							defaultValue={timeState.workHours}
@@ -131,7 +133,9 @@ function Dialog() {
 						<span>Break time</span>
 						<input
 							type="number"
-							step={0.00125}
+							step={0.25}
+							min={0}
+							max={6}
 							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 							placeholder="1 hour"
 							defaultValue={timeState.breakHours}
