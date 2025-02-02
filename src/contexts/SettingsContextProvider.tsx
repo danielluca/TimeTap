@@ -3,25 +3,15 @@ import type {
 	SettingsContextType,
 	TimeState,
 } from "../types/SettingsContextType"
-import type { Session } from "../types/Session"
 import { images } from "../constants/images"
 
 export const SettingsContext = createContext<SettingsContextType | null>(null)
 
-const storedSession = localStorage.getItem("session")
-const session: Session = JSON.parse(storedSession || "{}")
-
 export default function SettingsContextProvider({
 	children,
 }: { children: ReactNode }) {
-	const [name, setName] = useState(storedSession ? session.name : "")
-
 	const [notificationPermission, setNotificationPermission] =
 		useState<NotificationPermission>("default")
-
-	const [backgroundImage, setBackgroundImage] = useState(
-		storedSession ? session.backgroundImage : images[0],
-	)
 
 	const [showSettings, setShowSettings] = useState(false)
 
@@ -82,14 +72,10 @@ export default function SettingsContextProvider({
 	return (
 		<SettingsContext.Provider
 			value={{
-				name,
-				setName,
 				showSettings,
 				setShowSettings,
 				notificationPermission,
 				setNotificationPermission,
-				backgroundImage,
-				setBackgroundImage,
 				timeState,
 				setTimeState,
 			}}

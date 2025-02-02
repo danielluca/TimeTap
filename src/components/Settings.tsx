@@ -55,13 +55,9 @@ export default function Settings() {
 
 function Dialog() {
 	const {
-		name,
-		setName,
 		setShowSettings,
 		notificationPermission,
 		setNotificationPermission,
-		backgroundImage,
-		setBackgroundImage,
 		timeState,
 		setTimeState,
 	} = useSettingsContext()
@@ -101,10 +97,13 @@ function Dialog() {
 							type="text"
 							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 							placeholder="Your name"
-							defaultValue={name}
+							defaultValue={timeState.name}
 							name="firstname"
 							onChange={(e) => {
-								return setName(e.target.value)
+								return setTimeState((prev) => ({
+									...prev,
+									name: e.target.value,
+								}))
 							}}
 						/>
 					</label>
@@ -166,17 +165,21 @@ function Dialog() {
 										value={image.imageUrl}
 										className="sr-only"
 										onClick={() => {
-											return setBackgroundImage(image)
+											setTimeState((prev) => ({
+												...prev,
+												backgroundImage: image,
+											}))
 										}}
 									/>
 									<img
 										src={image.imageUrl}
 										alt={`Background by ${image.creator}`}
 										className={classNames("object-cover w-full h-full", {
-											"opacity-30": image.imageUrl === backgroundImage.imageUrl,
+											"opacity-30":
+												image.imageUrl === timeState.backgroundImage.imageUrl,
 										})}
 									/>
-									{image.imageUrl === backgroundImage.imageUrl && (
+									{image.imageUrl === timeState.backgroundImage.imageUrl && (
 										<div className="absolute w-full h-full flex justify-center items-center">
 											<CheckCircle
 												size={18}

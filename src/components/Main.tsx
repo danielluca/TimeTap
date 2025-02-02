@@ -4,7 +4,7 @@ import { getSalutation } from "../utility/getSalutation"
 import Timer from "./Timer"
 
 export default function Main() {
-	const { name, timeState, setTimeState } = useSettingsContext()
+	const { timeState, setTimeState } = useSettingsContext()
 
 	const startTimer = () => {
 		const totalMinutes =
@@ -61,7 +61,7 @@ export default function Main() {
 		<main className="p-[10vw]">
 			<h1 className="text-[max(8ch,_4.5vw)] font-medium tracking-[-0.2vw] leading-none">
 				Good {getSalutation()}
-				{name ? ` ${name},` : ","}
+				{timeState.name ? ` ${timeState.name},` : ","}
 				<br /> <span className="inline-block max-w-[22ch]">{getText()}</span>
 			</h1>
 		</main>
