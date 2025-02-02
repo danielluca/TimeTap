@@ -20,7 +20,7 @@ export default function SettingsContextProvider({
 		return saved
 			? JSON.parse(saved)
 			: {
-					workHours: 0.0125,
+					workHours: 0.25,
 					breakHours: 0,
 					endTime: null,
 					isRunning: false,
@@ -33,7 +33,9 @@ export default function SettingsContextProvider({
 	useEffect(() => {
 		// Request notification permission on mount
 		if ("Notification" in window) {
-			Notification.requestPermission()
+			Notification.requestPermission().then((permission) => {
+				setNotificationPermission(permission)
+			})
 		}
 	}, [])
 
