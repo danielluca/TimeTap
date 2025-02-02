@@ -7,14 +7,11 @@ import {
 } from "@phosphor-icons/react"
 import { createPortal } from "react-dom"
 import { useSettingsContext } from "../hooks/useSettingsContext"
-import { formatTime } from "../utility/formatTime"
-import convertTimeToMilliseconds from "../utility/convertToMilliseconds"
 import { images } from "../constants/images"
 import classNames from "classnames"
 
 export default function Settings() {
-	const { workHours, pause, showSettings, setShowSettings } =
-		useSettingsContext()
+	const { timeState, showSettings, setShowSettings } = useSettingsContext()
 
 	return (
 		<header className="flex flex-wrap justify-between gap-8 font-medium p-8">
@@ -29,8 +26,7 @@ export default function Settings() {
 					title="Set your working time"
 					onClick={() => setShowSettings(true)}
 				>
-					<ClockCountdown weight="fill" /> {formatTime(workHours).short} working
-					time
+					<ClockCountdown weight="fill" /> {timeState.workHours}h work time
 				</button>
 
 				<button
@@ -39,7 +35,7 @@ export default function Settings() {
 					title="Set your break time"
 					onClick={() => setShowSettings(true)}
 				>
-					<BowlFood weight="fill" /> {formatTime(pause).short} break time
+					<BowlFood weight="fill" /> {timeState.breakHours}h break time
 				</button>
 
 				<button
@@ -59,17 +55,11 @@ export default function Settings() {
 
 function Dialog() {
 	const {
-		name,
-		setName,
-		workHours,
-		setWorkingHours,
-		pause,
-		setPause,
 		setShowSettings,
 		notificationPermission,
 		setNotificationPermission,
-		backgroundImage,
-		setBackgroundImage,
+		timeState,
+		setTimeState,
 	} = useSettingsContext()
 
 	function requestForNotificationPermission() {
@@ -107,10 +97,13 @@ function Dialog() {
 							type="text"
 							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 							placeholder="Your name"
-							defaultValue={name}
+							defaultValue={timeState.name}
 							name="firstname"
 							onChange={(e) => {
-								return setName(e.target.value)
+								return setTimeState((prev) => ({
+									...prev,
+									name: e.target.value,
+								}))
 							}}
 						/>
 					</label>
@@ -118,15 +111,19 @@ function Dialog() {
 					<label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-tight">
 						<span>Working time</span>
 						<input
-							type="time"
+							type="number"
+							step={0.25}
+							min={0.25}
+							max={24}
 							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 							placeholder="8 hours"
-							defaultValue={formatTime(workHours).short}
+							defaultValue={timeState.workHours}
 							name="workHours"
 							onChange={(e) => {
-								return setWorkingHours(
-									convertTimeToMilliseconds(e.target.value),
-								)
+								return setTimeState((prev) => ({
+									...prev,
+									workHours: Number(e.target.value),
+								}))
 							}}
 						/>
 					</label>
@@ -134,13 +131,19 @@ function Dialog() {
 					<label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-tight">
 						<span>Break time</span>
 						<input
-							type="time"
+							type="number"
+							step={0.25}
+							min={0}
+							max={6}
 							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 							placeholder="1 hour"
-							defaultValue={formatTime(pause).short}
+							defaultValue={timeState.breakHours}
 							name="pause"
 							onChange={(e) => {
-								return setPause(convertTimeToMilliseconds(e.target.value))
+								return setTimeState((prev) => ({
+									...prev,
+									breakHours: Number(e.target.value),
+								}))
 							}}
 						/>
 					</label>
@@ -162,17 +165,21 @@ function Dialog() {
 										value={image.imageUrl}
 										className="sr-only"
 										onClick={() => {
-											return setBackgroundImage(image)
+											setTimeState((prev) => ({
+												...prev,
+												backgroundImage: image,
+											}))
 										}}
 									/>
 									<img
 										src={image.imageUrl}
 										alt={`Background by ${image.creator}`}
 										className={classNames("object-cover w-full h-full", {
-											"opacity-30": image.imageUrl === backgroundImage.imageUrl,
+											"opacity-30":
+												image.imageUrl === timeState.backgroundImage.imageUrl,
 										})}
 									/>
-									{image.imageUrl === backgroundImage.imageUrl && (
+									{image.imageUrl === timeState.backgroundImage.imageUrl && (
 										<div className="absolute w-full h-full flex justify-center items-center">
 											<CheckCircle
 												size={18}
