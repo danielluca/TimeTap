@@ -109,7 +109,30 @@ function Dialog() {
 					</label>
 
 					<label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-tight">
-						<span>Working time</span>
+						<span>Initial starting time (Optional)</span>
+						<input
+							type="time"
+							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
+							name="startTime"
+							value={
+								timeState.startTime
+									? new Date(timeState.startTime).toLocaleTimeString()
+									: ""
+							}
+							onChange={(e) => {
+								const [hours, minutes] = e.target.value.split(":").map(Number)
+								const startTime = new Date()
+								startTime.setHours(hours, minutes, 0, 0)
+								setTimeState((prev) => ({
+									...prev,
+									startTime: startTime.getTime(),
+								}))
+							}}
+						/>
+					</label>
+
+					<label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-tight">
+						<span>Working time (h)</span>
 						<input
 							type="number"
 							step={0.25}
@@ -117,7 +140,7 @@ function Dialog() {
 							max={24}
 							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 							placeholder="8 hours"
-							defaultValue={timeState.workHours}
+							value={timeState.workHours}
 							name="workHours"
 							onChange={(e) => {
 								return setTimeState((prev) => ({
@@ -129,7 +152,7 @@ function Dialog() {
 					</label>
 
 					<label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-tight">
-						<span>Break time</span>
+						<span>Break time (h)</span>
 						<input
 							type="number"
 							step={0.25}
@@ -137,7 +160,7 @@ function Dialog() {
 							max={6}
 							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 							placeholder="1 hour"
-							defaultValue={timeState.breakHours}
+							value={timeState.breakHours}
 							name="pause"
 							onChange={(e) => {
 								return setTimeState((prev) => ({

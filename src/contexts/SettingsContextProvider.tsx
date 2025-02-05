@@ -27,6 +27,7 @@ export default function SettingsContextProvider({
 					remainingTime: 0,
 					name: "",
 					backgroundImage: images[0],
+					startTime: null,
 				}
 	})
 

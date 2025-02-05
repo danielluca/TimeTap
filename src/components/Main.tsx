@@ -7,13 +7,17 @@ export default function Main() {
 	const { timeState, setTimeState } = useSettingsContext()
 
 	const startTimer = () => {
-		const totalMinutes =
+		const totalMilliseconds =
 			(timeState.workHours + timeState.breakHours) * 60 * 60 * 1000
+		const now = Date.now()
+		const startTime = timeState.startTime || now
+		const endTime = startTime + totalMilliseconds
+
 		setTimeState((prev) => ({
 			...prev,
-			endTime: Date.now() + totalMinutes,
+			endTime,
 			isRunning: true,
-			remainingTime: totalMinutes,
+			remainingTime: Math.max(0, endTime - now),
 		}))
 	}
 

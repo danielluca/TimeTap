@@ -17,4 +17,5 @@ export interface TimeState {
 		remainingTime: number;
 		name: string;
 		backgroundImage: { imageUrl: string; creator: string; profileHandle: string };
+		startTime: number | null;
 	}
