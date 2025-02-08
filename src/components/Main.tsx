@@ -15,6 +15,7 @@ export default function Main() {
 
 		setTimeState((prev) => ({
 			...prev,
+			startTime,
 			endTime,
 			isRunning: true,
 			remainingTime: Math.max(0, endTime - now),
@@ -22,12 +23,25 @@ export default function Main() {
 	}
 
 	const resetTimer = () => {
-		setTimeState((prev) => ({
-			...prev,
-			endTime: null,
-			isRunning: false,
-			remainingTime: 0,
-		}))
+		if (timeState.startTime && timeState.endTime) {
+			setTimeState((prev) => ({
+				...prev,
+				endTime: null,
+				isRunning: false,
+				remainingTime: 0,
+				history: [
+					...prev.history,
+					{
+						// biome-ignore lint/style/noNonNullAssertion: <explanation>
+						date: new Date(timeState.startTime!).toLocaleDateString(),
+						// biome-ignore lint/style/noNonNullAssertion: <explanation>
+						startTime: timeState.startTime!,
+						// biome-ignore lint/style/noNonNullAssertion: <explanation>
+						endTime: timeState.endTime!,
+					},
+				],
+			}))
+		}
 	}
 
 	const getText = () => {
@@ -61,6 +75,25 @@ export default function Main() {
 		)
 	}
 
+	const renderHistory = () => {
+		if (!timeState.history?.length) return null;
+
+		return (
+			<div className="mt-8">
+				<h2 className="text-xl font-medium mb-4">Previous Sessions</h2>
+				<ul className="space-y-2">
+					{timeState.history.map((entry, index) => (
+						// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+<li key={index} className="text-sm text-gray-300">
+							{entry.date} | Started: {new Date(entry.startTime).toLocaleTimeString()} | 
+							Ended: {new Date(entry.endTime).toLocaleTimeString()}
+						</li>
+					))}
+				</ul>
+			</div>
+		);
+	};
+
 	return (
 		<main className="p-[10vw]">
 			<h1 className="text-[max(8ch,_4.5vw)] font-medium tracking-[-0.2vw] leading-none">
@@ -68,6 +101,7 @@ export default function Main() {
 				{timeState.name ? ` ${timeState.name},` : ","}
 				<br /> <span className="inline-block max-w-[22ch]">{getText()}</span>
 			</h1>
+			{renderHistory()}
 		</main>
 	)
 }

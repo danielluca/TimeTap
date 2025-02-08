@@ -9,13 +9,19 @@ export type SettingsContextType = {
 	setTimeState: Dispatch<SetStateAction<TimeState>>
 }
 
+export interface TimerEntry {
+  date: string;
+  startTime: number;
+  endTime: number;
+}
+
 export interface TimeState {
-		workHours: number;
-		breakHours: number;
-		endTime: number | null;
-		isRunning: boolean;
-		remainingTime: number;
-		name: string;
-		backgroundImage: { imageUrl: string; creator: string; profileHandle: string };
-		startTime: number | null;
-	}
+  workHours: number;
+  breakHours: number;
+  name: string;
+  startTime: number | null;
+  endTime: number | null;
+  isRunning: boolean;
+  remainingTime: number;
+  history: TimerEntry[];
+}

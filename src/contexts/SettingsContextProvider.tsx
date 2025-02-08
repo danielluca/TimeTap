@@ -28,6 +28,7 @@ export default function SettingsContextProvider({
 					name: "",
 					backgroundImage: images[0],
 					startTime: null,
+					history: [],
 				}
 	})
 
