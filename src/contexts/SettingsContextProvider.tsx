@@ -14,7 +14,7 @@ export default function SettingsContextProvider({
 		useState<NotificationPermission>("default")
 
 	const [showSettings, setShowSettings] = useState(false)
-	const [showHistory, setShowHistory] = useState(true)
+	const [showHistory, setShowHistory] = useState(false)
 
 	const [timeState, setTimeState] = useState<TimeState>(() => {
 		const saved = localStorage.getItem("timeState")
