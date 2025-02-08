@@ -10,7 +10,7 @@ import {
 import { useSettingsContext } from "../hooks/useSettingsContext"
 import { images } from "../constants/images"
 import classNames from "classnames"
-import { AnimatedDialog } from "./AnimatedDialog"
+import { ModalDialog } from "./ModalDialog"
 import { useState } from "react"
 
 export default function Settings() {
@@ -66,24 +66,18 @@ export default function Settings() {
 				</button>
 			</div>
 
-			<AnimatedDialog
-				isOpen={showSettings}
-				onClose={() => setShowSettings(false)}
-			>
-				<Dialog />
-			</AnimatedDialog>
+			<ModalDialog isOpen={showSettings} onClose={() => setShowSettings(false)}>
+				<Options />
+			</ModalDialog>
 
-			<AnimatedDialog
-				isOpen={showHistory}
-				onClose={() => setShowHistory(false)}
-			>
+			<ModalDialog isOpen={showHistory} onClose={() => setShowHistory(false)}>
 				<History />
-			</AnimatedDialog>
+			</ModalDialog>
 		</header>
 	)
 }
 
-function Dialog() {
+function Options() {
 	const {
 		setShowSettings,
 		notificationPermission,

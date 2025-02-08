@@ -2,17 +2,13 @@ import { motion, AnimatePresence } from "motion/react"
 import type { ReactNode } from "react"
 import { createPortal } from "react-dom"
 
-interface AnimatedDialogProps {
+interface ModalDialogProps {
 	children: ReactNode
 	isOpen: boolean
 	onClose: () => void
 }
 
-export function AnimatedDialog({
-	children,
-	isOpen,
-	onClose,
-}: AnimatedDialogProps) {
+export function ModalDialog({ children, isOpen, onClose }: ModalDialogProps) {
 	return createPortal(
 		<AnimatePresence presenceAffectsLayout>
 			{isOpen && (
