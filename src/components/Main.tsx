@@ -75,16 +75,48 @@ export default function Main() {
 		)
 	}
 
+	const downloadHistoryCSV = () => {
+		if (!timeState.history?.length) return;
+	
+		// Create CSV content
+		const headers = "Date,Start Time,End Time\n";
+		const csvContent = timeState.history.reduce((acc, entry) => {
+			return `${acc}${entry.date},${new Date(entry.startTime).toLocaleTimeString()},${new Date(entry.endTime).toLocaleTimeString()}\n`;
+		}, headers);
+	
+		// Create blob and download link
+		const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+		const link = document.createElement("a");
+		const url = URL.createObjectURL(blob);
+		
+		link.setAttribute("href", url);
+		link.setAttribute("download", `timer-history-${new Date().toISOString().split('T')[0]}.csv`);
+		link.style.visibility = 'hidden';
+		
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	};
+
 	const renderHistory = () => {
 		if (!timeState.history?.length) return null;
 
 		return (
 			<div className="mt-8">
-				<h2 className="text-xl font-medium mb-4">Previous Sessions</h2>
+				<div className="flex justify-between items-center mb-4">
+					<h2 className="text-xl font-medium">Previous Sessions</h2>
+					<button
+						type="button"
+						onClick={downloadHistoryCSV}
+						className="px-4 py-2 text-sm bg-gray-700 hover:bg-gray-600 rounded-md transition-colors"
+					>
+						Download CSV
+					</button>
+				</div>
 				<ul className="space-y-2">
 					{timeState.history.map((entry, index) => (
 						// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-<li key={index} className="text-sm text-gray-300">
+						<li key={index} className="text-sm text-gray-300">
 							{entry.date} | Started: {new Date(entry.startTime).toLocaleTimeString()} | 
 							Ended: {new Date(entry.endTime).toLocaleTimeString()}
 						</li>
