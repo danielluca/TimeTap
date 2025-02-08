@@ -3,6 +3,8 @@ import type { Dispatch, SetStateAction } from "react"
 export type SettingsContextType = {
 	showSettings: boolean
 	setShowSettings: Dispatch<SetStateAction<boolean>>
+	showHistory: boolean
+	setShowHistory: Dispatch<SetStateAction<boolean>>
 	notificationPermission: NotificationPermission
 	setNotificationPermission: Dispatch<SetStateAction<NotificationPermission>>
 	timeState: TimeState
@@ -16,6 +18,11 @@ export interface TimerEntry {
 }
 
 export interface TimeState {
+	backgroundImage: {
+    imageUrl: string;
+    creator: string;
+    profileHandle: string;
+  };
   workHours: number;
   breakHours: number;
   name: string;

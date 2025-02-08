@@ -4,6 +4,8 @@ import {
 	CheckCircle,
 	ClockCountdown,
 	GearSix,
+	Timer,
+	X,
 } from "@phosphor-icons/react"
 import { createPortal } from "react-dom"
 import { useSettingsContext } from "../hooks/useSettingsContext"
@@ -11,7 +13,13 @@ import { images } from "../constants/images"
 import classNames from "classnames"
 
 export default function Settings() {
-	const { timeState, showSettings, setShowSettings } = useSettingsContext()
+	const {
+		timeState,
+		showSettings,
+		setShowSettings,
+		showHistory,
+		setShowHistory,
+	} = useSettingsContext()
 
 	return (
 		<header className="flex flex-wrap justify-between gap-8 font-medium p-8">
@@ -40,6 +48,15 @@ export default function Settings() {
 
 				<button
 					type="button"
+					className="hidden group relative md:inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
+					title="Set your break time"
+					onClick={() => setShowHistory(true)}
+				>
+					<Timer weight="fill" /> History
+				</button>
+
+				<button
+					type="button"
 					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1 aspect-square"
 					title="Settings"
 					onClick={() => setShowSettings(true)}
@@ -49,6 +66,7 @@ export default function Settings() {
 			</div>
 
 			{showSettings && createPortal(<Dialog />, document.body)}
+			{showHistory && createPortal(<History />, document.body)}
 		</header>
 	)
 }
@@ -80,14 +98,22 @@ function Dialog() {
 	return (
 		<div className="absolute flex justify-center md:items-center inset-0 bg-slate-700/90 overflow-hidden p-4">
 			<form
-				className="p-8 bg-slate-100 rounded-xl flex flex-col gap-8 w-full max-w-md shadow-2xl shadow-slate-800 h-fit"
+				className="p-8 bg-slate-100 rounded-xl flex flex-col gap-8 w-full max-w-2xl shadow-2xl shadow-slate-800 h-fit"
 				onSubmit={(e) => {
 					e.preventDefault()
 					return setShowSettings(false)
 				}}
 			>
-				<header>
+				<header className="flex justify-between items-center">
 					<h2 className="text-2xl font-semibold">Settings</h2>
+
+					<button
+						type="button"
+						className="bg-slate-200 p-1.5 rounded-full hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center aspect-square transition-colors font-semibold"
+						onClick={() => setShowSettings(false)}
+					>
+						<X weight="bold" color="currentColor" size={16} />
+					</button>
 				</header>
 
 				<main className="flex flex-col gap-4">
@@ -227,13 +253,133 @@ function Dialog() {
 						</button>
 					)}
 				</main>
+			</form>
+		</div>
+	)
+}
 
-				<footer>
+function History() {
+	const { setShowHistory, timeState, setTimeState } = useSettingsContext()
+
+	const downloadHistoryCSV = () => {
+		if (!timeState.history?.length) return
+
+		// Create CSV content
+		const headers = "Date,Start Time,End Time\n"
+		const csvContent = timeState.history.reduce((acc, entry) => {
+			return `${acc}${entry.date},${new Date(
+				entry.startTime,
+			).toLocaleTimeString()},${new Date(entry.endTime).toLocaleTimeString()}\n`
+		}, headers)
+
+		// Create blob and download link
+		const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
+		const link = document.createElement("a")
+		const url = URL.createObjectURL(blob)
+
+		link.setAttribute("href", url)
+		link.setAttribute(
+			"download",
+			`timer-history-${new Date().toISOString().split("T")[0]}.csv`,
+		)
+		link.style.visibility = "hidden"
+
+		document.body.appendChild(link)
+		link.click()
+		document.body.removeChild(link)
+	}
+
+	const renderHistory = () => {
+		if (!timeState.history?.length) return null
+
+		return (
+			<tbody className="divide-y divide-gray-200">
+				{timeState.history.map((entry) => (
+					<tr key={entry.startTime}>
+						<td className="py-2 whitespace-nowrap text-sm">{entry.date}</td>
+						<td className="py-2 whitespace-nowrap text-sm">
+							{new Date(entry.startTime).toLocaleTimeString()}
+						</td>
+						<td className="py-2 whitespace-nowrap text-sm">
+							{new Date(entry.endTime).toLocaleTimeString()}
+						</td>
+					</tr>
+				))}
+			</tbody>
+		)
+	}
+
+	return (
+		<div className="absolute flex justify-center md:items-center inset-0 bg-slate-700/90 overflow-hidden p-4">
+			<form
+				className="p-8 bg-slate-100 rounded-xl flex flex-col gap-8 w-full max-w-2xl shadow-2xl shadow-slate-800 h-fit"
+				onSubmit={(e) => {
+					e.preventDefault()
+					return setShowHistory(false)
+				}}
+			>
+				<header className="flex justify-between items-center">
+					<h2 className="text-2xl font-semibold">History</h2>
+
 					<button
-						type="submit"
+						type="button"
+						className="bg-slate-200 p-1.5 rounded-full hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center aspect-square transition-colors font-semibold"
+						onClick={() => setShowHistory(false)}
+					>
+						<X weight="bold" color="currentColor" size={16} />
+					</button>
+				</header>
+
+				<main className="flex flex-col gap-4">
+					<div className="mt-8">
+						<table className="min-w-full divide-y">
+							<thead className="border-b">
+								<tr>
+									<th
+										scope="col"
+										className="py-2 text-left text-xs font-medium uppercase tracking-wider"
+									>
+										Date
+									</th>
+									<th
+										scope="col"
+										className="py-2 text-left text-xs font-medium uppercase tracking-wider"
+									>
+										Start Time
+									</th>
+									<th
+										scope="col"
+										className="py-2 text-left text-xs font-medium uppercase tracking-wider"
+									>
+										End Time
+									</th>
+								</tr>
+							</thead>
+							{renderHistory()}
+						</table>
+					</div>
+				</main>
+
+				<footer className="grid gap-2">
+					<button
+						type="button"
+						onClick={downloadHistoryCSV}
 						className="bg-slate-200 text-black px-4 py-2 rounded-lg hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center w-full transition-colors font-semibold"
 					>
-						Done
+						Download CSV
+					</button>
+
+					<button
+						type="button"
+						className="bg-slate-200 text-black px-4 py-2 rounded-lg hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center w-full transition-colors font-semibold"
+						onClick={() => {
+							setTimeState((prev) => ({
+								...prev,
+								history: [],
+							}))
+						}}
+					>
+						Clear History
 					</button>
 				</footer>
 			</form>
