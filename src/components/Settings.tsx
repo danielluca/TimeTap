@@ -5,6 +5,7 @@ import {
 	ClockCountdown,
 	GearSix,
 	Timer,
+	Trash,
 	X,
 } from "@phosphor-icons/react"
 import { useSettingsContext } from "../hooks/useSettingsContext"
@@ -12,6 +13,7 @@ import { images } from "../constants/images"
 import classNames from "classnames"
 import { ModalDialog } from "./ModalDialog"
 import { useState } from "react"
+import { div } from "motion/react-client"
 
 export default function Settings() {
 	const {
@@ -295,9 +297,52 @@ function History() {
 	const renderHistory = () => {
 		if (!timeState.history?.length) return null
 
+		function DeleteEntryButton({ index }: { index: number }) {
+			const [alert, setAlert] = useState(false)
+
+			return (
+				<div className="absolute top-0 right-0 flex gap-1 justify-end py-1">
+					{!alert && (
+						<button
+							type="button"
+							className="flex items-center gap-1 text-slate-400 hover:text-red-500 p-2"
+							onClick={() => setAlert(true)}
+						>
+							<Trash weight="bold" />
+						</button>
+					)}
+
+					{alert && (
+						<>
+							<button
+								type="button"
+								className="flex items-center gap-1 text-red-500 hover:text-red-700 p-1"
+								onClick={() => {
+									const newHistory = [...timeState.history]
+									newHistory.splice(index, 1)
+									setTimeState((prev) => ({ ...prev, history: newHistory }))
+									setAlert(false)
+								}}
+							>
+								<Trash weight="bold" /> Delete
+							</button>
+
+							<button
+								type="button"
+								className="flex items-center gap-1 text-slate-500 hover:text-slate-700 p-1"
+								onClick={() => setAlert(false)}
+							>
+								Cancel
+							</button>
+						</>
+					)}
+				</div>
+			)
+		}
+
 		return (
 			<tbody className="divide-y divide-gray-200">
-				{timeState.history.map((entry) => (
+				{timeState.history.map((entry, index) => (
 					<tr key={entry.startTime}>
 						<td className="py-2">{entry.date}</td>
 						<td className="py-2">
@@ -309,6 +354,9 @@ function History() {
 							{new Date(entry.endTime).toLocaleTimeString("de-DE", {
 								timeStyle: "short",
 							})}
+						</td>
+						<td className="relative py-2 text-right min-w-12">
+							<DeleteEntryButton index={index} />
 						</td>
 					</tr>
 				))}
@@ -343,6 +391,7 @@ function History() {
 							<th scope="col" className="py-2 text-left font-medium border-b">
 								End Time
 							</th>
+							<th scope="col" className="py-2 text-left font-medium border-b" />
 						</tr>
 					</thead>
 					{renderHistory()}
