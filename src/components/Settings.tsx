@@ -13,7 +13,6 @@ import { images } from "../constants/images"
 import classNames from "classnames"
 import { ModalDialog } from "./ModalDialog"
 import { useState } from "react"
-import { div } from "motion/react-client"
 
 export default function Settings() {
 	const {
