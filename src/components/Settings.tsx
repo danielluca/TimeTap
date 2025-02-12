@@ -262,15 +262,15 @@ function Options() {
 }
 
 function History() {
-	const { setShowHistory, timeState, setTimeState } = useSettingsContext()
+	const { setShowHistory, history, setHistory } = useSettingsContext()
 	const [alert, setAlert] = useState(false)
 
 	const downloadHistoryCSV = () => {
-		if (!timeState.history?.length) return
+		if (!history?.length) return
 
 		// Create CSV content
 		const headers = "Date,Start Time,End Time\n"
-		const csvContent = timeState.history.reduce((acc, entry) => {
+		const csvContent = history.reduce((acc, entry) => {
 			return `${acc}${entry.date},${new Date(
 				entry.startTime,
 			).toLocaleTimeString()},${new Date(entry.endTime).toLocaleTimeString()}\n`
@@ -284,7 +284,7 @@ function History() {
 		link.setAttribute("href", url)
 		link.setAttribute(
 			"download",
-			`timer-history-${new Date().toISOString().split("T")[0]}.csv`,
+			`history-${new Date().toISOString().split("T")[0]}.csv`,
 		)
 		link.style.visibility = "hidden"
 
@@ -294,13 +294,13 @@ function History() {
 	}
 
 	const renderHistory = () => {
-		if (!timeState.history?.length) return null
+		if (!history?.length) return null
 
 		function DeleteEntryButton({ index }: { index: number }) {
 			const [alert, setAlert] = useState(false)
 
 			return (
-				<div className="absolute top-0 right-0 flex gap-1 justify-end py-1">
+				<div className="absolute inset-0 flex gap-1 justify-end py-1">
 					{!alert && (
 						<button
 							type="button"
@@ -317,9 +317,9 @@ function History() {
 								type="button"
 								className="flex items-center gap-1 text-red-500 hover:text-red-700 p-1"
 								onClick={() => {
-									const newHistory = [...timeState.history]
+									const newHistory = [...history]
 									newHistory.splice(index, 1)
-									setTimeState((prev) => ({ ...prev, history: newHistory }))
+									setHistory(newHistory)
 									setAlert(false)
 								}}
 							>
@@ -341,7 +341,7 @@ function History() {
 
 		return (
 			<tbody className="divide-y divide-gray-200">
-				{timeState.history.map((entry, index) => (
+				{history.map((entry, index) => (
 					<tr key={entry.startTime}>
 						<td className="py-2">{entry.date}</td>
 						<td className="py-2">
@@ -354,7 +354,7 @@ function History() {
 								timeStyle: "short",
 							})}
 						</td>
-						<td className="relative py-2 text-right min-w-12">
+						<td className="relative">
 							<DeleteEntryButton index={index} />
 						</td>
 					</tr>
@@ -411,7 +411,7 @@ function History() {
 					className="border border-red-500 text-red-500 px-4 py-2 rounded-lg hover:bg-red-500 hover:text-white inline-flex items-center gap-2 justify-center text-center w-full transition-colors font-semibold"
 					onClick={() => {
 						if (alert) {
-							setTimeState((prev) => ({ ...prev, history: [] }))
+							setHistory([])
 							setShowHistory(false)
 						} else {
 							setAlert(true)

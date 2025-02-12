@@ -4,7 +4,7 @@ import { getSalutation } from "../utility/getSalutation"
 import Timer from "./Timer"
 
 export default function Main() {
-	const { timeState, setTimeState } = useSettingsContext()
+	const { timeState, setTimeState, setHistory } = useSettingsContext()
 
 	const startTimer = () => {
 		const totalMilliseconds =
@@ -22,25 +22,24 @@ export default function Main() {
 		}))
 	}
 
-	const resetTimer = () => {
+	const stopTimer = () => {
 		if (timeState.startTime && timeState.endTime) {
 			setTimeState((prev) => ({
 				...prev,
+				startTime: null,
 				endTime: null,
 				isRunning: false,
 				remainingTime: 0,
-				history: [
-					...prev.history,
-					{
-						// biome-ignore lint/style/noNonNullAssertion: <explanation>
-						date: new Date(timeState.startTime!).toLocaleDateString(),
-						// biome-ignore lint/style/noNonNullAssertion: <explanation>
-						startTime: timeState.startTime!,
-						// biome-ignore lint/style/noNonNullAssertion: <explanation>
-						endTime: timeState.endTime!,
-					},
-				],
 			}))
+
+			setHistory((prev) => [
+				...prev,
+				{
+					date: new Date().toLocaleDateString(),
+					startTime: timeState.startTime || 0,
+					endTime: new Date().getTime(),
+				},
+			])
 		}
 	}
 
@@ -66,7 +65,7 @@ export default function Main() {
 				<button
 					type="button"
 					className="inline text-left hover:text-red-200 transition-colors"
-					onClick={() => resetTimer()}
+					onClick={() => stopTimer()}
 				>
 					end <StopCircle className="inline" weight="fill" /> your work
 				</button>{" "}

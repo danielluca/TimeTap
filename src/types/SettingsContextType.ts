@@ -9,6 +9,8 @@ export type SettingsContextType = {
 	setNotificationPermission: Dispatch<SetStateAction<NotificationPermission>>
 	timeState: TimeState
 	setTimeState: Dispatch<SetStateAction<TimeState>>
+  history: TimerEntry[]
+  setHistory: Dispatch<SetStateAction<TimerEntry[]>>
 }
 
 export interface TimerEntry {
@@ -30,5 +32,4 @@ export interface TimeState {
   endTime: number | null;
   isRunning: boolean;
   remainingTime: number;
-  history: TimerEntry[];
 }

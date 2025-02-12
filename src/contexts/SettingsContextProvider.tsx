@@ -2,6 +2,7 @@ import { type ReactNode, createContext, useState, useEffect } from "react"
 import type {
 	SettingsContextType,
 	TimeState,
+	TimerEntry,
 } from "../types/SettingsContextType"
 import { images } from "../constants/images"
 
@@ -29,8 +30,12 @@ export default function SettingsContextProvider({
 					name: "",
 					backgroundImage: images[0],
 					startTime: null,
-					history: [],
 				}
+	})
+
+	const [history, setHistory] = useState<TimerEntry[]>(() => {
+		const saved = localStorage.getItem("history")
+		return saved ? JSON.parse(saved) : []
 	})
 
 	useEffect(() => {
@@ -47,6 +52,10 @@ export default function SettingsContextProvider({
 	}, [timeState])
 
 	useEffect(() => {
+		localStorage.setItem("history", JSON.stringify(history))
+	}, [history])
+
+	useEffect(() => {
 		if (!timeState.isRunning) return
 
 		const interval = setInterval(() => {
@@ -55,7 +64,22 @@ export default function SettingsContextProvider({
 				const remaining = Math.max(0, timeState.endTime - now)
 
 				if (remaining <= 0) {
-					setTimeState((prev) => ({ ...prev, isRunning: false }))
+					setTimeState((prev) => ({
+						...prev,
+						isRunning: false,
+						startTime: null,
+						endTime: null,
+					}))
+
+					setHistory((prev) => [
+						...prev,
+						{
+							date: new Date().toLocaleDateString(),
+							startTime: timeState.startTime || 0,
+							endTime: timeState.endTime || 0,
+						},
+					])
+
 					if (
 						"Notification" in window &&
 						Notification.permission === "granted"
@@ -72,6 +96,7 @@ export default function SettingsContextProvider({
 		}, 1000)
 
 		return () => clearInterval(interval)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [timeState.isRunning, timeState.endTime])
 
 	return (
@@ -85,6 +110,8 @@ export default function SettingsContextProvider({
 				setNotificationPermission,
 				timeState,
 				setTimeState,
+				history,
+				setHistory,
 			}}
 		>
 			{children}
