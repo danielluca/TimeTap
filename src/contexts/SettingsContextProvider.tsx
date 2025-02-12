@@ -56,6 +56,18 @@ export default function SettingsContextProvider({
 	}, [history])
 
 	useEffect(() => {
+		if (timeState.isRunning) {
+			return document
+				.querySelector("link[rel='icon']")
+				?.setAttribute("href", "favicon-checked-in.png")
+		}
+
+		return document
+			.querySelector("link[rel='icon']")
+			?.setAttribute("href", "favicon.png")
+	}, [timeState.isRunning])
+
+	useEffect(() => {
 		if (!timeState.isRunning) return
 
 		const interval = setInterval(() => {
