@@ -145,7 +145,7 @@ function Options() {
 						type="time"
 						className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 						name="startTime"
-						value={
+						defaultValue={
 							timeState.startTime
 								? new Date(timeState.startTime).toLocaleTimeString()
 								: ""
@@ -171,7 +171,7 @@ function Options() {
 						max={24}
 						className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 						placeholder="8 hours"
-						value={timeState.workHours}
+						defaultValue={timeState.workHours}
 						name="workHours"
 						onChange={(e) => {
 							return setTimeState((prev) => ({
@@ -188,10 +188,10 @@ function Options() {
 						type="number"
 						step={0.25}
 						min={0}
-						max={6}
+						max={24}
 						className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 						placeholder="1 hour"
-						value={timeState.breakHours}
+						defaultValue={timeState.breakHours}
 						name="pause"
 						onChange={(e) => {
 							return setTimeState((prev) => ({

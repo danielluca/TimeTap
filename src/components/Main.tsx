@@ -50,7 +50,7 @@ export default function Main() {
 					ready to{" "}
 					<button
 						type="button"
-						className="inline text-left hover:text-green-200 transition-colors"
+						className="inline text-left hover:text-green-200 text-green-100 transition-colors"
 						onClick={() => startTimer()}
 					>
 						start <PlayCircle className="inline" weight="fill" /> your work
@@ -61,15 +61,15 @@ export default function Main() {
 
 		return (
 			<>
-				there are <Timer /> hours left until you can{" "}
+				there are <Timer /> hours left until your work day is complete.{" "}
 				<button
 					type="button"
-					className="inline text-left hover:text-red-200 transition-colors"
+					className="inline text-left hover:text-red-300 text-red-200 transition-colors"
 					onClick={() => stopTimer()}
 				>
-					end <StopCircle className="inline" weight="fill" /> your work
+					End <StopCircle className="inline" weight="fill" /> work
 				</button>{" "}
-				day
+				day now.
 			</>
 		)
 	}
