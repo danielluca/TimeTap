@@ -1,10 +1,14 @@
-import { PlayCircle, StopCircle } from "@phosphor-icons/react"
+import { PlayCircle, StopCircle, X } from "@phosphor-icons/react"
 import { useSettingsContext } from "../hooks/useSettingsContext"
 import { getSalutation } from "../utility/getSalutation"
 import Timer from "./Timer"
+import { useState } from "react"
+import { ModalDialog } from "./ModalDialog"
 
 export default function Main() {
 	const { timeState, setTimeState, setHistory } = useSettingsContext()
+	const [startAlert, setStartAlert] = useState(false)
+	const [stopAlert, setStopAlert] = useState(false)
 
 	const startTimer = () => {
 		const totalMilliseconds =
@@ -51,7 +55,7 @@ export default function Main() {
 					<button
 						type="button"
 						className="inline text-left hover:text-green-200 text-green-100 transition-colors"
-						onClick={() => startTimer()}
+						onClick={() => setStartAlert(true)}
 					>
 						start <PlayCircle className="inline" weight="fill" /> your work
 					</button>{" "}
@@ -65,7 +69,7 @@ export default function Main() {
 				<button
 					type="button"
 					className="inline text-left hover:text-red-300 text-red-200 transition-colors"
-					onClick={() => stopTimer()}
+					onClick={() => setStopAlert(true)}
 				>
 					End <StopCircle className="inline" weight="fill" /> work
 				</button>{" "}
@@ -76,6 +80,92 @@ export default function Main() {
 
 	return (
 		<main className="p-[10vw]">
+			<ModalDialog
+				isOpen={startAlert}
+				onClose={() => setStartAlert(false)}
+				className="max-w-md"
+			>
+				<form action="" className="w-full grid gap-4">
+					<header className="flex justify-between items-center">
+						<h2 className="text-2xl font-semibold">Start your work day</h2>
+
+						<button
+							type="button"
+							className="bg-slate-200 p-1.5 rounded-full hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center aspect-square transition-colors font-semibold"
+							onClick={() => setStartAlert(false)}
+						>
+							<X weight="bold" color="currentColor" size={16} />
+						</button>
+					</header>
+
+					<main className="flex flex-col gap-4 mt-8">
+						<label className="flex flex-col gap-1 font-semibold">
+							<span>Starting time</span>
+							<input
+								type="time"
+								className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
+								name="startTime"
+								defaultValue={new Date().toLocaleTimeString()}
+								onChange={(e) =>
+									setTimeState((prev) => ({
+										...prev,
+										startTime: new Date(
+											`${new Date().toDateString()} ${e.target.value}`,
+										).getTime(),
+									}))
+								}
+							/>
+						</label>
+					</main>
+
+					<footer className="grid gap-2">
+						<button
+							type="button"
+							className="bg-green-100 font-semibold py-2 px-4 rounded-lg hover:bg-green-200 transition-colors w-full"
+							onClick={() => {
+								startTimer()
+								setStartAlert(false)
+							}}
+						>
+							Start
+						</button>
+					</footer>
+				</form>
+			</ModalDialog>
+
+			<ModalDialog
+				isOpen={stopAlert}
+				onClose={() => setStopAlert(false)}
+				className="max-w-md"
+			>
+				<form action="" className="w-full grid gap-4">
+					<header className="flex justify-between items-center">
+						<h2 className="text-2xl font-semibold">End your work day?</h2>
+
+						<button
+							type="button"
+							className="bg-slate-200 p-1.5 rounded-full hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center aspect-square transition-colors font-semibold"
+							onClick={() => setStartAlert(false)}
+						>
+							<X weight="bold" color="currentColor" size={16} />
+						</button>
+					</header>
+
+					<footer className="grid gap-2">
+						<button
+							type="button"
+							className="bg-green-100 font-semibold py-2 px-4 rounded-lg hover:bg-green-200 transition-colors w-full"
+							onClick={() => {
+								stopTimer()
+								setStopAlert(false)
+							}}
+						>
+							Yes
+						</button>
+					</footer>
+				</form>
+			</ModalDialog>
+
 			<h1 className="text-[max(8ch,_4.5vw)] font-medium tracking-[-0.2vw] leading-none">
 				Good {getSalutation()}
 				{timeState.name ? ` ${timeState.name},` : ","}
