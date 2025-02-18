@@ -27,7 +27,7 @@ export function ModalDialog({ children, isOpen, onClose }: ModalDialogProps) {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: 20 }}
-						className="items-center justify-center max-w-2xl p-8 bg-slate-100 rounded-xl flex flex-col gap-8 w-full shadow-2xl shadow-slate-900 h-fit max-h-full overflow-hidden"
+						className="items-center justify-center max-w-4xl p-8 bg-slate-100 rounded-xl flex flex-col gap-8 w-full shadow-2xl shadow-slate-900 h-fit max-h-full overflow-hidden"
 					>
 						{children}
 					</motion.div>
