@@ -14,7 +14,7 @@ export type SettingsContextType = {
 }
 
 export interface TimerEntry {
-  date: string;
+  date: Date;
   startTime: number;
   endTime: number;
 }

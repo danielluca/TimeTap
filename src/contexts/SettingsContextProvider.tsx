@@ -86,7 +86,7 @@ export default function SettingsContextProvider({
 					setHistory((prev) => [
 						...prev,
 						{
-							date: new Date().toLocaleDateString(),
+							date: new Date(),
 							startTime: timeState.startTime || 0,
 							endTime: timeState.endTime || 0,
 						},

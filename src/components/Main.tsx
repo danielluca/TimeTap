@@ -35,7 +35,7 @@ export default function Main() {
 			setHistory((prev) => [
 				...prev,
 				{
-					date: new Date().toLocaleDateString(),
+					date: new Date(),
 					startTime: timeState.startTime || 0,
 					endTime: new Date().getTime(),
 				},

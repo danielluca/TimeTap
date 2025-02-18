@@ -293,6 +293,17 @@ function History() {
 		document.body.removeChild(link)
 	}
 
+	// Add helper to format duration (in ms) as HH:MM:SS
+	function formatDuration(duration: number): string {
+		const totalSeconds = Math.floor(duration / 1000)
+		const hours = Math.floor(totalSeconds / 3600)
+		const minutes = Math.floor((totalSeconds % 3600) / 60)
+		const seconds = totalSeconds % 60
+		return `${hours.toString().padStart(2, "0")}:${minutes
+			.toString()
+			.padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+	}
+
 	const renderHistory = () => {
 		if (!history?.length) return null
 
@@ -343,16 +354,26 @@ function History() {
 			<tbody className="divide-y divide-gray-200">
 				{history.map((entry, index) => (
 					<tr key={entry.startTime}>
-						<td className="py-2">{entry.date}</td>
+						<td>
+							{new Date(entry.date).toLocaleDateString("de-DE", {
+								weekday: "short",
+								year: "numeric",
+								month: "2-digit",
+								day: "2-digit",
+							})}
+						</td>
 						<td className="py-2">
 							{new Date(entry.startTime).toLocaleTimeString("de-DE", {
-								timeStyle: "short",
+								timeStyle: "medium",
 							})}
 						</td>
 						<td className="py-2">
 							{new Date(entry.endTime).toLocaleTimeString("de-DE", {
-								timeStyle: "short",
+								timeStyle: "medium",
 							})}
+						</td>
+						<td className="py-2">
+							{formatDuration(entry.endTime - entry.startTime)}
 						</td>
 						<td className="relative">
 							<DeleteEntryButton index={index} />
@@ -385,10 +406,13 @@ function History() {
 								Date
 							</th>
 							<th scope="col" className="py-2 text-left font-medium border-b">
-								Start Time
+								Starting at
 							</th>
 							<th scope="col" className="py-2 text-left font-medium border-b">
-								End Time
+								Ending at
+							</th>
+							<th scope="col" className="py-2 text-left font-medium border-b">
+								Total time
 							</th>
 							<th scope="col" className="py-2 text-left font-medium border-b" />
 						</tr>
