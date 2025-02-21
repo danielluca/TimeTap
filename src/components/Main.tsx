@@ -146,7 +146,7 @@ export default function Main() {
 					<footer className="grid gap-2">
 						<button
 							type="button"
-							className="bg-slate-200 font-semibold py-2 px-4 rounded-lg hover:bg-slate-300 transition-colors w-full"
+							className="bg-slate-200 font-semibold py-2 px-4 rounded-lg hover:bg-green-300 transition-colors w-full"
 							onClick={() => {
 								stopTimer()
 								setStopAlert(false)
