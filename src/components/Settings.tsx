@@ -139,75 +139,50 @@ function Options() {
 					/>
 				</label>
 
-				<label className="flex flex-col gap-1 font-semibold">
-					<span>Initial starting time (Optional)</span>
+				<label className="flex flex-1 flex-col gap-1 font-semibold">
+					<span>Default working time (in hours)</span>
 					<input
-						type="time"
+						type="number"
+						step={0.25}
+						min={0.25}
+						max={24}
 						className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
-						name="startTime"
-						defaultValue={
-							timeState.startTime
-								? new Date(timeState.startTime).toLocaleTimeString()
-								: ""
-						}
+						placeholder="8 hours"
+						defaultValue={timeState.workHours}
+						name="workHours"
 						onChange={(e) => {
-							const [hours, minutes] = e.target.value.split(":").map(Number)
-							const startTime = new Date()
-							startTime.setHours(hours, minutes, 0, 0)
-							setTimeState((prev) => ({
+							return setTimeState((prev) => ({
 								...prev,
-								startTime: startTime.getTime(),
+								workHours: Number(e.target.value),
 							}))
 						}}
 					/>
 				</label>
 
-				<div className="flex flex-1 gap-4">
-					<label className="flex flex-1 flex-col gap-1 font-semibold">
-						<span>Default working time (in hours)</span>
-						<input
-							type="number"
-							step={0.25}
-							min={0.25}
-							max={24}
-							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
-							placeholder="8 hours"
-							defaultValue={timeState.workHours}
-							name="workHours"
-							onChange={(e) => {
-								return setTimeState((prev) => ({
-									...prev,
-									workHours: Number(e.target.value),
-								}))
-							}}
-						/>
-					</label>
-
-					<label className="flex flex-1 flex-col gap-1 font-semibold">
-						<span>Default break time (in hours)</span>
-						<input
-							type="number"
-							step={0.25}
-							min={0}
-							max={24}
-							className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
-							placeholder="1 hour"
-							defaultValue={timeState.breakHours}
-							name="pause"
-							onChange={(e) => {
-								return setTimeState((prev) => ({
-									...prev,
-									breakHours: Number(e.target.value),
-								}))
-							}}
-						/>
-					</label>
-				</div>
+				<label className="flex flex-1 flex-col gap-1 font-semibold">
+					<span>Default break time (in hours)</span>
+					<input
+						type="number"
+						step={0.25}
+						min={0}
+						max={24}
+						className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
+						placeholder="1 hour"
+						defaultValue={timeState.breakHours}
+						name="pause"
+						onChange={(e) => {
+							return setTimeState((prev) => ({
+								...prev,
+								breakHours: Number(e.target.value),
+							}))
+						}}
+					/>
+				</label>
 
 				<label className="flex flex-col gap-1 font-semibold">
 					<span>Background image</span>
 
-					<fieldset className="grid grid-cols-6 gap-2">
+					<fieldset className="grid grid-cols-4 gap-2">
 						{images.map((image) => (
 							<label
 								key={image.imageUrl}
