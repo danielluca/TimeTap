@@ -86,19 +86,13 @@ export default function Main() {
 				className="max-w-md"
 			>
 				<form action="" className="w-full grid gap-4">
-					<header className="flex justify-between items-center">
-						<h2 className="text-2xl font-semibold">Start your work day</h2>
-
-						<button
-							type="button"
-							className="bg-slate-200 p-1.5 rounded-full hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center aspect-square transition-colors font-semibold"
-							onClick={() => setStartAlert(false)}
-						>
-							<X weight="bold" color="currentColor" size={16} />
-						</button>
+					<header className="text-center">
+						<h2 className="text-2xl font-semibold text-center">
+							Start work day
+						</h2>
 					</header>
 
-					<main className="flex flex-col gap-4 mt-8">
+					<main className="flex flex-col gap-4 mt-4">
 						<label className="flex flex-col gap-1 font-semibold">
 							<span>Starting time</span>
 							<input
@@ -121,13 +115,13 @@ export default function Main() {
 					<footer className="grid gap-2">
 						<button
 							type="button"
-							className="bg-green-100 font-semibold py-2 px-4 rounded-lg hover:bg-green-200 transition-colors w-full"
+							className="bg-slate-200 font-semibold py-2 px-4 rounded-lg hover:bg-green-300 transition-colors w-full"
 							onClick={() => {
 								startTimer()
 								setStartAlert(false)
 							}}
 						>
-							Start
+							Start now
 						</button>
 					</footer>
 				</form>
@@ -138,29 +132,35 @@ export default function Main() {
 				onClose={() => setStopAlert(false)}
 				className="max-w-md"
 			>
-				<form action="" className="w-full grid gap-4">
-					<header className="flex justify-between items-center">
-						<h2 className="text-2xl font-semibold">End your work day?</h2>
+				<form action="" className="w-full grid gap-8">
+					<header className="flex flex-col gap-2 justify-between items-center">
+						<h2 className="text-2xl font-semibold text-center">
+							Stop work day
+						</h2>
 
-						<button
-							type="button"
-							className="bg-slate-200 p-1.5 rounded-full hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center aspect-square transition-colors font-semibold"
-							onClick={() => setStartAlert(false)}
-						>
-							<X weight="bold" color="currentColor" size={16} />
-						</button>
+						<p className="text-center text-balance">
+							Do you really want to end your work day before the timer ends?
+						</p>
 					</header>
 
 					<footer className="grid gap-2">
 						<button
 							type="button"
-							className="bg-green-100 font-semibold py-2 px-4 rounded-lg hover:bg-green-200 transition-colors w-full"
+							className="bg-slate-200 font-semibold py-2 px-4 rounded-lg hover:bg-slate-300 transition-colors w-full"
 							onClick={() => {
 								stopTimer()
 								setStopAlert(false)
 							}}
 						>
-							Yes
+							Yes, end now
+						</button>
+
+						<button
+							type="button"
+							className="bg-slate-200 font-semibold py-2 px-4 rounded-lg hover:bg-red-300 transition-colors w-full"
+							onClick={() => setStopAlert(false)}
+						>
+							Cancel
 						</button>
 					</footer>
 				</form>
