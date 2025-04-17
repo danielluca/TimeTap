@@ -79,7 +79,7 @@ export default function Main() {
 	}
 
 	return (
-		<main className="p-[10vw]">
+		<main className="p-8 md:px-[7vw] py-[25vh] relative z-10">
 			<ModalDialog
 				isOpen={startAlert}
 				onClose={() => setStartAlert(false)}
@@ -166,7 +166,7 @@ export default function Main() {
 				</form>
 			</ModalDialog>
 
-			<h1 className="text-[max(8ch,_4.5vw)] font-medium tracking-[-0.2vw] leading-none">
+			<h1 className="text-6xl md:text-[7vw] font-medium tracking-tighter leading-none">
 				Good {getSalutation()}
 				{timeState.name ? ` ${timeState.name},` : ","}
 				<br /> <span className="inline-block max-w-[22ch]">{getText()}</span>
