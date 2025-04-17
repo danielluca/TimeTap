@@ -5,10 +5,10 @@ export default function Background() {
 	const { timeState } = useSettingsContext()
 
 	return (
-		<div>
+		<div className="fixed inset-0 overflow-hidden z-0">
 			<a
 				href={`https://unsplash.com/${timeState.backgroundImage.profileHandle}`}
-				className="bg-white/30 inline-flex items-center text-white rounded px-2 pr-1 absolute right-0 bottom-0 m-8 gap-2 text-sm opacity-50 hover:opacity-100 transition-all"
+				className="bg-white/30 inline-flex items-center text-white rounded px-2 pr-1 absolute right-0 bottom-0 m-4 gap-2 text-sm opacity-50 hover:opacity-100 transition-all"
 				target="_blank"
 				rel="noopener noreferrer"
 			>
