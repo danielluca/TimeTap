@@ -23,7 +23,7 @@ export function ModalDialog({
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
-					className="absolute flex justify-center items-center inset-0 bg-slate-700/90 overflow-hidden p-4"
+					className="absolute flex justify-center items-center inset-0 bg-slate-700/90 overflow-hidden p-4 z-50"
 					onClick={(e) => {
 						if (e.target === e.currentTarget) {
 							onClose()

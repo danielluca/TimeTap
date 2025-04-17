@@ -24,7 +24,7 @@ export default function Settings() {
 	} = useSettingsContext()
 
 	return (
-		<header className="flex flex-wrap justify-between gap-8 font-medium p-8">
+		<header className="fixed top-0 left-0 right-0 flex flex-wrap justify-between gap-8 font-medium p-8 z-20">
 			<div className="inline-flex items-center gap-2">
 				<img src="logo.svg" alt="Logo" width={20} /> TimeTap
 			</div>
