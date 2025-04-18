@@ -50,7 +50,7 @@ export default function Settings() {
 
 				<button
 					type="button"
-					className="hidden group relative md:inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
+					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
 					title="View your history"
 					onClick={() => setShowHistory(true)}
 				>
@@ -59,11 +59,11 @@ export default function Settings() {
 
 				<button
 					type="button"
-					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1 aspect-square"
+					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
 					title="All settings"
 					onClick={() => setShowSettings(true)}
 				>
-					<GearSix weight="fill" />
+					<GearSix weight="fill" /> Settings
 				</button>
 			</div>
 
@@ -125,6 +125,8 @@ function Options() {
 				<label className="flex flex-col gap-1 font-semibold">
 					<span>Name</span>
 					<input
+						// biome-ignore lint/a11y/noAutofocus: <explanation>
+						autoFocus
 						type="text"
 						className="border border-slate-200 p-2 px-3 rounded-lg text-base font-normal tracking-normal bg-slate-50"
 						placeholder="Your name"
@@ -186,9 +188,9 @@ function Options() {
 						{images.map((image) => (
 							<label
 								key={image.imageUrl}
-								className={
-									"flex overflow-hidden rounded-lg cursor-pointer hover:opacity-80 transition-opacity relative bg-slate-200 aspect-video"
-								}
+								className={classNames(
+									"flex overflow-hidden rounded-lg cursor-pointer hover:opacity-80 transition-all relative bg-slate-200 aspect-video focus-within:ring-2 focus-within:ring-blue-700 focus-within:ring-offset-1",
+								)}
 							>
 								<input
 									type="radio"
