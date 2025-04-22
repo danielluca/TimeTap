@@ -85,7 +85,7 @@ export default function Main() {
 				onClose={() => setStartAlert(false)}
 				className="max-w-md"
 			>
-				<form action="" className="w-full grid gap-4">
+				<form className="w-full grid gap-4">
 					<header className="text-center">
 						<h2 className="text-2xl font-semibold text-center">
 							Start work day
@@ -114,7 +114,8 @@ export default function Main() {
 
 					<footer className="grid gap-2">
 						<button
-							type="button"
+							type="submit"
+							disabled={!timeState.startTime}
 							className="bg-slate-200 font-semibold py-2 px-4 rounded-lg hover:bg-green-300 transition-colors w-full"
 							onClick={() => {
 								startTimer()
