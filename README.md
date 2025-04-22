@@ -27,7 +27,7 @@ TimeTap is a simple app designed to help you maintain a healthy work-life balanc
    ```bash
    npm start
    ```
-2. Open your browser and navigate to `http://localhost:3000`.
+2. Open your browser and navigate to `http://localhost:5173/TimeTap/`.
 3. Set your working hours and start tracking!
 
 ## Data Storage and Privacy
