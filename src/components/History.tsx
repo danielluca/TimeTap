@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSettingsContext } from "../hooks/useSettingsContext";
 import { Trash, X } from "@phosphor-icons/react";
+import classNames from "classnames";
 
 export default function History() {
   const { setShowHistory, history, setHistory } = useSettingsContext();
@@ -42,7 +43,7 @@ export default function History() {
       const [alert, setAlert] = useState(false);
 
       return (
-        <div className="absolute inset-0 flex gap-1 justify-end py-1">
+        <div className={classNames("absolute inset-0 flex gap-1 justify-end py-1", { "bg-slate-100/80": alert })}>
           {!alert && (
             <button
               type="button"
@@ -82,19 +83,35 @@ export default function History() {
     }
 
     return (
-      <tbody className="divide-y divide-gray-200">
+      <div role="table" aria-label="History entries" className="divide-y divide-slate-200">
+        <div role="row" className="sr-only">
+          <span role="columnheader">Date</span>
+          <span role="columnheader">Starting at</span>
+          <span role="columnheader">Ending at</span>
+          <span role="columnheader">Total time</span>
+          <span role="columnheader">Actions</span>
+        </div>
+
         {history.map((entry, index) => (
-          <tr key={entry.startTime}>
-            <td>{new Date(entry.date).toLocaleDateString("de-DE", { weekday: "short", year: "numeric", month: "2-digit", day: "2-digit" })}</td>
-            <td className="py-2">{new Date(entry.startTime).toLocaleTimeString("de-DE", { timeStyle: "medium" })}</td>
-            <td className="py-2">{new Date(entry.endTime).toLocaleTimeString("de-DE", { timeStyle: "medium" })}</td>
-            <td className="py-2">{formatDuration(entry.endTime - entry.startTime)}</td>
-            <td className="relative">
+          <div key={`${entry.date}-${index}`} role="row" className="relative grid py-2 grid-cols-5 gap-8">
+            <div role="gridcell" className="w-max">
+              {new Date(entry.date).toLocaleDateString("de-DE", { weekday: "short", year: "numeric", month: "2-digit", day: "2-digit" })}
+            </div>
+            <div role="gridcell" className="w-max">
+              {new Date(entry.startTime).toLocaleTimeString("de-DE", { timeStyle: "medium" })}
+            </div>
+            <div role="gridcell" className="">
+              {new Date(entry.endTime).toLocaleTimeString("de-DE", { timeStyle: "medium" })}
+            </div>
+            <div role="gridcell" className="w-max">
+              {formatDuration(entry.endTime - entry.startTime)}
+            </div>
+            <div role="gridcell">
               <DeleteEntryButton index={index} />
-            </td>
-          </tr>
+            </div>
+          </div>
         ))}
-      </tbody>
+      </div>
     );
   };
 
@@ -113,18 +130,15 @@ export default function History() {
       </header>
 
       <main className="flex flex-col gap-4 my-8 max-h-96 overflow-scroll">
-        <table className="min-w-full">
-          <thead className="sticky top-0 bg-slate-100">
-            <tr>
-              <th scope="col" className="py-2 text-left font-medium border-b">Date</th>
-              <th scope="col" className="py-2 text-left font-medium border-b">Starting at</th>
-              <th scope="col" className="py-2 text-left font-medium border-b">Ending at</th>
-              <th scope="col" className="py-2 text-left font-medium border-b">Total time</th>
-              <th scope="col" className="py-2 text-left font-medium border-b" />
-            </tr>
-          </thead>
+        <div role="table" aria-label="History entries" className="divide-y divide-slate-200">
+          <div role="row" className="grid grid-cols-5 gap-8 font-semibold py-1">
+            <span role="columnheader">Date</span>
+            <span role="columnheader">Starting at</span>
+            <span role="columnheader">Ending at</span>
+            <span role="columnheader">Total time</span>
+          </div>
           {renderHistory()}
-        </table>
+        </div>
       </main>
 
       <footer className="grid gap-2">
