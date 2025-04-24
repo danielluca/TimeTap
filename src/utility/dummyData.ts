@@ -1,38 +1,50 @@
 import type { TimerEntry } from "../types/SettingsContextType";
 
+function getRandomNumber(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function generateWorkDay(date: Date): TimerEntry {
+  // Generate random work duration (3-8 hours) in milliseconds
+  const workDurationHours = getRandomNumber(3, 8);
+  const workDurationMs = workDurationHours * 3600000; // Convert hours to milliseconds
+  
+  // Generate random start time between 7 AM and 10 AM
+  const startHour = getRandomNumber(7, 10);
+  const startTime = new Date(date);
+  startTime.setHours(startHour, 0, 0, 0);
+  
+  // Calculate end time based on start time and duration
+  const endTime = new Date(startTime.getTime() + workDurationMs);
+
+  return {
+    date: date,
+    startTime: startTime.getTime(),
+    endTime: endTime.getTime()
+  };
+}
+
+function isWeekend(date: Date): boolean {
+  const dayOfWeek = date.getDay();
+  return dayOfWeek === 0 || dayOfWeek === 6; // 0 is Sunday, 6 is Saturday
+}
+
 export function generateDummyHistory(): TimerEntry[] {
   const dummyData: TimerEntry[] = [];
-  const now = new Date();
-  // Set to first day of current month
-  const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
-  let daysAdded = 0;
+  const today = new Date();
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  
+  let workdaysAdded = 0;
   let currentDay = 0;
 
-  // Continue until we have data for all weekdays in the month (excluding weekends)
-  while (daysAdded < 30 && currentDay < 31) {
-    const date = new Date(firstDay);
-    date.setDate(firstDay.getDate() + currentDay);
+  // Generate data for weekdays until we reach 30 days or end of month
+  while (workdaysAdded < 30 && currentDay < 31) {
+    const currentDate = new Date(firstDayOfMonth);
+    currentDate.setDate(firstDayOfMonth.getDate() + currentDay);
     
-    // Skip weekends (0 is Sunday, 6 is Saturday)
-    const dayOfWeek = date.getDay();
-    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-      // Random work duration between 3-8 hours in milliseconds
-      const workDuration = Math.floor(Math.random() * (8 - 3 + 1) + 3) * 3600000;
-      
-      // Set start time to a random hour between 7 AM and 10 AM
-      const startHour = Math.floor(Math.random() * (10 - 7 + 1) + 7);
-      const startTime = new Date(date);
-      startTime.setHours(startHour, 0, 0, 0);
-      
-      const endTime = new Date(startTime.getTime() + workDuration);
-
-      dummyData.push({
-        date: date,
-        startTime: startTime.getTime(),
-        endTime: endTime.getTime()
-      });
-      
-      daysAdded++;
+    if (!isWeekend(currentDate)) {
+      dummyData.push(generateWorkDay(currentDate));
+      workdaysAdded++;
     }
     
     currentDay++;
