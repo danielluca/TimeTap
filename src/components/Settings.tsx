@@ -3,7 +3,7 @@ import {
 	ClockCountdown,
 	GearSix,
 	Timer,
-	ChartLineUp,
+	ChartBar,
 } from "@phosphor-icons/react"
 import { useSettingsContext } from "../hooks/useSettingsContext"
 
@@ -54,7 +54,7 @@ export default function Settings() {
 					title="View analytics"
 					onClick={() => setShowAnalytics(true)}
 				>
-					<ChartLineUp weight="fill" /> Analytics
+					<ChartBar weight="fill" /> Analytics
 				</button>
 
 				<button
