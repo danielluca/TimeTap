@@ -4,7 +4,6 @@ import {
   BarChart,
   Bar,
   XAxis,
-  YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
@@ -21,8 +20,8 @@ export default function Analytics() {
   const { setShowAnalytics, history } = useSettingsContext();
 
   const currentDate = new Date();
-  const weekStart = startOfWeek(currentDate);
-  const weekEnd = endOfWeek(currentDate);
+  const weekStart = startOfWeek(currentDate, { weekStartsOn: 1 }); // 1 represents Monday
+  const weekEnd = endOfWeek(currentDate, { weekStartsOn: 1 });
 
   // Calculate total hours worked this week
   const weeklyTotal = history
@@ -45,8 +44,8 @@ export default function Analytics() {
       const dayTotal = history
         .filter(
           (entry) =>
-            format(new Date(entry.date), "dd-MM-yyyy") ===
-            format(day, "dd-MM-yyyy")
+            format(new Date(entry.date), "yyyy-MM-dd") ===
+            format(day, "yyyy-MM-dd")
         )
         .reduce((total, entry) => {
           return total + (entry.endTime - entry.startTime) / (1000 * 60 * 60);
@@ -64,9 +63,6 @@ export default function Analytics() {
       <header className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-semibold">Analytics</h2>
-          <p className="text-slate-500">
-            View your work patterns and productivity metrics
-          </p>
         </div>
 
         <button
@@ -99,7 +95,6 @@ export default function Analytics() {
               <BarChart data={dailyData}>
                 <CartesianGrid strokeDasharray="4" stroke="var(--color-slate-300)" />
                 <XAxis dataKey="name" />
-                <YAxis />
                 <Tooltip />
                 <Bar dataKey="hours" fill="var(--color-slate-700)" />
               </BarChart>
