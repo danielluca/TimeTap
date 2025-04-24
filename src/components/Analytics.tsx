@@ -8,9 +8,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
 } from "recharts";
 import {
   startOfWeek,
@@ -19,8 +16,6 @@ import {
   format,
   isWithinInterval,
 } from "date-fns";
-
-const COLORS = ["#0088FE", "#00C49F"];
 
 export default function Analytics() {
   const { setShowAnalytics, history } = useSettingsContext();
@@ -50,8 +45,8 @@ export default function Analytics() {
       const dayTotal = history
         .filter(
           (entry) =>
-            format(new Date(entry.date), "yyyy-MM-dd") ===
-            format(day, "yyyy-MM-dd")
+            format(new Date(entry.date), "dd-MM-yyyy") ===
+            format(day, "dd-MM-yyyy")
         )
         .reduce((total, entry) => {
           return total + (entry.endTime - entry.startTime) / (1000 * 60 * 60);
@@ -63,31 +58,6 @@ export default function Analytics() {
       };
     }
   );
-
-  // Calculate work-break ratio data
-  const workBreakData = [
-    {
-      name: "Work",
-      value: weeklyTotal,
-    },
-    {
-      name: "Break",
-      value: history
-        .filter((entry) =>
-          isWithinInterval(new Date(entry.date), {
-            start: weekStart,
-            end: weekEnd,
-          })
-        )
-        .reduce((total, entry) => {
-          return (
-            total +
-            (entry.endTime - entry.startTime) / (1000 * 60 * 60) -
-            weeklyTotal
-          );
-        }, 0),
-    },
-  ];
 
   return (
     <div className="w-full max-w-4xl">
@@ -125,44 +95,14 @@ export default function Analytics() {
         <div className="bg-slate-100 p-4 rounded-xl">
           <h3 className="font-semibold mb-4">Daily Hours</h3>
           <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="100%" className="">
               <BarChart data={dailyData}>
-                <CartesianGrid strokeDasharray="3 3" />
+                <CartesianGrid strokeDasharray="4" stroke="var(--color-slate-300)" />
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="hours" fill="rgb(51 65 85)" />
+                <Bar dataKey="hours" fill="var(--color-slate-700)" />
               </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        <div className="bg-slate-100 p-4 rounded-xl">
-          <h3 className="font-semibold mb-4">Work-Break Ratio</h3>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={workBreakData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) =>
-                    `${name} (${(percent * 100).toFixed(0)}%)`
-                  }
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {workBreakData.map((entry, index) => (
-                    <Cell
-                      key={entry.name}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
