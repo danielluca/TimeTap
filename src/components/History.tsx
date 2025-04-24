@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useSettingsContext } from "../hooks/useSettingsContext";
 import { Trash, X } from "@phosphor-icons/react";
 import classNames from "classnames";
+import { generateDummyHistory } from "../utility/dummyData"
 
 export default function History() {
-  const { setShowHistory, history, setHistory } = useSettingsContext();
+  const { setShowHistory, history, setHistory, } = useSettingsContext();
   const [alert, setAlert] = useState(false);
 
   const downloadHistoryCSV = () => {
@@ -164,6 +165,16 @@ export default function History() {
         >
           {alert ? "Click again to delete" : "Clear History"}
         </button>
+
+        {import.meta.env.DEV && (
+          <button
+            type="button"
+            onClick={() => setHistory(generateDummyHistory(30))}
+            className="bg-slate-200 px-4 py-2 rounded-lg hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center w-full transition-colors font-semibold"
+          >
+            Load Dummy Data
+          </button>
+        )}
       </footer>
     </div>
   );
