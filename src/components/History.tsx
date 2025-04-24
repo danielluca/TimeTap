@@ -169,7 +169,7 @@ export default function History() {
         {import.meta.env.DEV && (
           <button
             type="button"
-            onClick={() => setHistory(generateDummyHistory(30))}
+            onClick={() => setHistory(generateDummyHistory())}
             className="bg-slate-200 px-4 py-2 rounded-lg hover:bg-slate-300 inline-flex items-center gap-2 justify-center text-center w-full transition-colors font-semibold"
           >
             Load Dummy Data
