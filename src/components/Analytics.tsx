@@ -4,7 +4,6 @@ import {
   BarChart,
   Bar,
   XAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
@@ -34,9 +33,11 @@ export default function Analytics() {
 
   // Calculate average session duration
   const averageSessionDuration =
-    history.reduce((total, entry) => {
-      return total + (entry.endTime - entry.startTime);
-    }, 0) / (history.length * 1000 * 60 * 60);
+    history.length > 0
+      ? history.reduce((total, entry) => {
+        return total + (entry.endTime - entry.startTime);
+      }, 0) / (history.length * 1000 * 60 * 60)
+      : 0;
 
   // Prepare data for daily hours chart
   const dailyData = eachDayOfInterval({ start: weekStart, end: weekEnd }).map(
@@ -52,7 +53,7 @@ export default function Analytics() {
         }, 0);
 
       return {
-        name: format(day, "EEE"),
+        name: format(day, "EEE"), // Day name (Mon, Tue, etc.)
         hours: Number(dayTotal.toFixed(2)),
       };
     }
@@ -74,34 +75,46 @@ export default function Analytics() {
         </button>
       </header>
 
-      <main className="flex flex-col gap-8 my-8">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-slate-100 p-4 rounded-xl">
-            <h3 className="font-semibold mb-2">Weekly Total</h3>
-            <p className="text-3xl font-bold">{weeklyTotal.toFixed(1)}h</p>
+      <main className="flex flex-col gap-8 mt-8">
+        <div className="grid grid-cols-2 gap-8">
+          <div>
+            <label className="font-semibold mb-2">Weekly Total</label>
+            <h3 className="text-3xl font-bold">{weeklyTotal.toFixed(1)} h</h3>
           </div>
-          <div className="bg-slate-100 p-4 rounded-xl">
-            <h3 className="font-semibold mb-2">Avg. Session Duration</h3>
-            <p className="text-3xl font-bold">
-              {averageSessionDuration.toFixed(1)}h
-            </p>
-          </div>
-        </div>
 
-        <div className="bg-slate-100 p-4 rounded-xl">
-          <h3 className="font-semibold mb-4">Daily Hours</h3>
+          <div>
+            <label className="font-semibold mb-2">Avg. Session Duration</label>
+            <h3 className="text-3xl font-bold">
+              {averageSessionDuration.toFixed(1)} h
+            </h3>
+          </div>
+        </div >
+
+        <div>
+          <label className="font-semibold mb-4"> Daily Hours Worked</label>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%" className="">
               <BarChart data={dailyData}>
-                <CartesianGrid strokeDasharray="4" stroke="var(--color-slate-300)" />
                 <XAxis dataKey="name" />
-                <Tooltip />
+                <Tooltip
+                  wrapperClassName="rounded-md shadow-lg"
+                  labelClassName="var(--color-slate-700) font-semibold"
+                  contentStyle={{
+                    background: "var(--color-slate-100)",
+                    color: "var(--color-slate-700)",
+                    borderColor: "transparent",
+                    padding: "0.5rem",
+                    lineHeight: "1",
+                    margin: "0"
+                  }}
+                  cursor={{ fill: "var(--color-slate-300)" }}
+                />
                 <Bar dataKey="hours" fill="var(--color-slate-700)" />
               </BarChart>
             </ResponsiveContainer>
           </div>
-        </div>
-      </main>
-    </div>
+        </div >
+      </main >
+    </div >
   );
 }
