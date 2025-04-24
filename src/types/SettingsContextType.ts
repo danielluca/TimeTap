@@ -5,6 +5,8 @@ export type SettingsContextType = {
 	setShowSettings: Dispatch<SetStateAction<boolean>>
 	showHistory: boolean
 	setShowHistory: Dispatch<SetStateAction<boolean>>
+	showAnalytics: boolean
+	setShowAnalytics: Dispatch<SetStateAction<boolean>>
 	notificationPermission: NotificationPermission
 	setNotificationPermission: Dispatch<SetStateAction<NotificationPermission>>
 	timeState: TimeState

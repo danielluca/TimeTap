@@ -3,12 +3,14 @@ import {
 	ClockCountdown,
 	GearSix,
 	Timer,
+	ChartLineUp,
 } from "@phosphor-icons/react"
 import { useSettingsContext } from "../hooks/useSettingsContext"
 
 import { ModalDialog } from "./ModalDialog"
-import History from "./History";
-import Options from "./Options";
+import History from "./History"
+import Options from "./Options"
+import Analytics from "./Analytics"
 
 export default function Settings() {
 	const {
@@ -17,6 +19,8 @@ export default function Settings() {
 		setShowSettings,
 		showHistory,
 		setShowHistory,
+		showAnalytics,
+		setShowAnalytics,
 	} = useSettingsContext()
 
 	return (
@@ -47,6 +51,15 @@ export default function Settings() {
 				<button
 					type="button"
 					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
+					title="View analytics"
+					onClick={() => setShowAnalytics(true)}
+				>
+					<ChartLineUp weight="fill" /> Analytics
+				</button>
+
+				<button
+					type="button"
+					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
 					title="View your history"
 					onClick={() => setShowHistory(true)}
 				>
@@ -69,6 +82,13 @@ export default function Settings() {
 
 			<ModalDialog isOpen={showHistory} onClose={() => setShowHistory(false)}>
 				<History />
+			</ModalDialog>
+
+			<ModalDialog
+				isOpen={showAnalytics}
+				onClose={() => setShowAnalytics(false)}
+			>
+				<Analytics />
 			</ModalDialog>
 		</header>
 	)
