@@ -1,3 +1,5 @@
+![github-social-preview](https://github.com/user-attachments/assets/45f49560-797c-48a2-9718-726d8bc21c9a)
+
 # TimeTap
 
 TimeTap is a simple app designed to help you maintain a healthy work-life balance. Set your desired working hours, check in daily, and receive notifications when your workday is over.
