@@ -25,15 +25,15 @@ export default function Insights() {
       </header>
 
       <Tabs tabs={[
-        { label: "Analytics", content: <Analytics /> },
-        { label: "History", content: <History /> },
+        { label: "Analytics", content: <AnalyticsTab /> },
+        { label: "History", content: <HistoryTab /> },
       ]}
       />
     </div>
   )
 }
 
-function History() {
+function HistoryTab() {
   const { setShowInsights, history, setHistory, } = useSettingsContext();
   const [alert, setAlert] = useState(false);
 
@@ -202,7 +202,7 @@ function History() {
   );
 }
 
-function Analytics() {
+function AnalyticsTab() {
   const { history } = useSettingsContext();
 
   const currentDate = new Date();
