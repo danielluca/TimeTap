@@ -3,10 +3,8 @@ import type { Dispatch, SetStateAction } from "react"
 export type SettingsContextType = {
 	showSettings: boolean
 	setShowSettings: Dispatch<SetStateAction<boolean>>
-	showHistory: boolean
-	setShowHistory: Dispatch<SetStateAction<boolean>>
-	showAnalytics: boolean
-	setShowAnalytics: Dispatch<SetStateAction<boolean>>
+	showInsights: boolean
+	setShowInsights: Dispatch<SetStateAction<boolean>>
 	notificationPermission: NotificationPermission
 	setNotificationPermission: Dispatch<SetStateAction<NotificationPermission>>
 	timeState: TimeState

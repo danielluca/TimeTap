@@ -2,25 +2,21 @@ import {
 	BowlFood,
 	ClockCountdown,
 	GearSix,
-	Timer,
 	ChartBar,
 } from "@phosphor-icons/react"
 import { useSettingsContext } from "../hooks/useSettingsContext"
 
 import { ModalDialog } from "./ModalDialog"
-import History from "./History"
 import Options from "./Options"
-import Analytics from "./Analytics"
+import Insights from "./Insights"
 
 export default function Settings() {
 	const {
 		timeState,
 		showSettings,
 		setShowSettings,
-		showHistory,
-		setShowHistory,
-		showAnalytics,
-		setShowAnalytics,
+		showInsights,
+		setShowInsights,
 	} = useSettingsContext()
 
 	return (
@@ -52,18 +48,9 @@ export default function Settings() {
 					type="button"
 					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
 					title="View analytics"
-					onClick={() => setShowAnalytics(true)}
+					onClick={() => setShowInsights(true)}
 				>
-					<ChartBar weight="fill" /> Analytics
-				</button>
-
-				<button
-					type="button"
-					className="group relative inline-flex items-center gap-2 transition-all hover:bg-white/30 rounded-lg px-2 py-1"
-					title="View your history"
-					onClick={() => setShowHistory(true)}
-				>
-					<Timer weight="fill" /> History
+					<ChartBar weight="fill" /> Insights
 				</button>
 
 				<button
@@ -80,15 +67,11 @@ export default function Settings() {
 				<Options />
 			</ModalDialog>
 
-			<ModalDialog isOpen={showHistory} onClose={() => setShowHistory(false)}>
-				<History />
-			</ModalDialog>
-
 			<ModalDialog
-				isOpen={showAnalytics}
-				onClose={() => setShowAnalytics(false)}
+				isOpen={showInsights}
+				onClose={() => setShowInsights(false)}
 			>
-				<Analytics />
+				<Insights />
 			</ModalDialog>
 		</header>
 	)
