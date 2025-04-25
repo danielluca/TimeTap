@@ -13,7 +13,7 @@ TimeTap is a simple app designed to help you maintain a healthy work-life balanc
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/TimeTap.git
+   git clone https://github.com/danielluca/TimeTap.git
    ```
 2. Navigate to the project directory:
    ```bash
