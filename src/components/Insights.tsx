@@ -1,4 +1,4 @@
-import { Trash, X } from "@phosphor-icons/react";
+import { SmileyBlank, Trash, X } from "@phosphor-icons/react";
 import { useSettingsContext } from "../hooks/useSettingsContext";
 import Tabs from "./Tabs";
 import { useState } from "react";
@@ -67,7 +67,12 @@ function History() {
   }
 
   const renderHistory = () => {
-    if (!history?.length) return null;
+    if (!history?.length) return (
+      <div className="p-8 text-slate-400 flex items-center justify-center gap-1 flex-col">
+        <SmileyBlank weight="bold" />
+        No history available
+      </div>
+    )
 
     function DeleteEntryButton({ index }: { index: number }) {
       const [alert, setAlert] = useState(false);
